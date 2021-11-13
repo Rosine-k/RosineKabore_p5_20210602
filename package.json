@@ -1,0 +1,26 @@
+{
+  "name": "orinoco-backend",
+  "version": "1.0.0",
+  "description": "This is the back end server for Project 5 of the Junior Web Developer path.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "sass": "sass --watch ./sass/main.scss:./public/css/style.css"
+  },
+  "author": "Rosine Kabore",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "express": "^4.16.4",
+    "uuid": "^3.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rosine-k/JWDP5-master.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rosine-k/JWDP5-master/issues"
+  },
+  "homepage": "https://github.com/Rosine-k/JWDP5-master#readme"
+}
