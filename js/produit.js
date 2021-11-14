@@ -34,12 +34,13 @@ const createProduct = (data) =>{
 }
 
 //récupérer l'ID du produit
-const params = new URLSearchParams(window.location.search);
+let params = new URLSearchParams(window.location.search);
+
 let idProduct = params.get('idProduct');
 
-let url = "http://localhost:3000/api/cameras/" + idProduct;
+let urlProduct = URL + '/' + idProduct;
 
-fetch(url)
+fetch(urlProduct)
 .then(response => response.json())
 .then(response => {
 

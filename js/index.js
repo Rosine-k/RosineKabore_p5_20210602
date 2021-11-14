@@ -1,5 +1,5 @@
 //récupération des produits à partir de l'API et affichage
-fetch(url)
+fetch(URL_API)
    .then(response => response.json())
    .then(response => {
         

@@ -1,1 +1,1 @@
-const url = 'http://localhost:3000/api/cameras';
+const URL_API = 'http://localhost:3000/api/cameras';
