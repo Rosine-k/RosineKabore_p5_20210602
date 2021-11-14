@@ -1,3 +1,4 @@
+// création du produit
 const createProduct = (data) =>{
 
     //divisez le prix par 100 
@@ -27,8 +28,8 @@ fetch("http://localhost:3000/api/cameras")
         
        for (let value of response) {
         
-        let product = createProduct(value);
+        let camera = createProduct(value);
 
-           document.getElementById("card-camera").innerHTML += product;   
+           document.getElementById("card-camera").innerHTML += camera;   
         }   
     }); 
