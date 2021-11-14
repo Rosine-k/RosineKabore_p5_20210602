@@ -1,5 +1,5 @@
 //récupération des produits à partir de l'API et affichage
-fetch('http://localhost:3000/api/cameras')
+fetch(url)
    .then(response => response.json())
    .then(response => {
         
