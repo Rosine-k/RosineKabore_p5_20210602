@@ -25,8 +25,8 @@ fetch("http://localhost:3000/api/cameras")
         
        for (let value of response) {
         
-        let camera = createProduct(value);
+            let camera = createProduct(value);
 
-           document.querySelector(".card-camera").innerHTML += camera;   
+            document.querySelector(".card-camera").innerHTML += camera;   
         }   
     }); 
