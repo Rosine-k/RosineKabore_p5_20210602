@@ -1,6 +1,9 @@
 // création du produit
 const createCamera = (data) =>{
 
+     //divisez le prix par 100 
+     data.price = data.price / 100;
+
     return `<div class="col-sm-6">
               <a href="produit.html?id=${data._id}">
                     <div class="card">
