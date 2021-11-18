@@ -1,8 +1,5 @@
 const createProduct = (data) =>{
 
-    //divisez le prix par 100 
-    data.price = data.price / 100;
-
     return `<div class="col-sm-8 mx-auto">
                 <div class="card">
                     <img class="card-img-top" src="${data.imageUrl}" width="250" height="250" alt="camera">
