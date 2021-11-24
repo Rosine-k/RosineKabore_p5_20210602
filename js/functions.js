@@ -6,6 +6,9 @@ const createPrice = (data) =>{
     //formater le prix
     let price = priceFormat(data.price);
 
-    
+}
 
+function formatPrice(price) {
+
+    return (price /100);
 }
