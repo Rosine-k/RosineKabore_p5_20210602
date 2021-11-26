@@ -4,7 +4,7 @@ const createProduct = (item) =>{
                     <img class="card-img-top" src="${item.imageUrl}" width="250" height="250" alt="camera">
                     <div class="card-body bgc-primary">
                         <h3 class="card-title black">${item.name}</h3>
-                        <h4 class="card-price black"> ${ formatPrice(item.price)} €</h4>
+                        <h4 class="card-price black"> ${formatPrice(item.price)} €</h4>
                         <label for="choice">Choisissez une option</label>
                         <select name="option_lense" id="option_lense" class="lenses">
 
@@ -23,21 +23,25 @@ const createProduct = (item) =>{
                             <option>10+</option>
                         </select>
 
-                        <button id="addToCart" class="btn btn-panier border-dark addPanier" type="button">Ajouter au panier</button>
+                        <button onclick="fenetreConfirmation()" id="addToCart" class="btn btn-panier border-dark addPanier" type="button">Ajouter au panier</button>
                     </div>
                 </div>       
             </div>` ;
   
 }
+
+
 function showProduct(camera)
 {
     document.querySelector(".card-produit").innerHTML += camera;
 }
 
+
 function AddEventAddToCart(item)
 {
-    document.getElementById("addToCart").addEventListener("click",function() { addItemTocart(item);},false);
+    document.getElementById("addToCart").addEventListener("click",function() { addItemToCart(item);},false);
 }
+
 
 function addOption(item)
 {
@@ -45,7 +49,6 @@ function addOption(item)
         document.querySelector(".lenses").innerHTML += `<option>${lense}</option>`;
        }
 }
-
 
 
 //récupérer l'ID du produit
@@ -68,58 +71,55 @@ fetch(urlProduct)
 });
 
 
-function addItemTocart(item)
+function addItemToCart(item)
 {
    //récupération de l'option
+   let selectLenses = document.querySelector("#option_lense");
+
+   let choixLenses = selectLenses.value; 
 
    //récupération de la quantité
+   let quantiteProduit = document.querySelector("#quantity-product").value; 
 
     //traitement du local storage
-    // Si le local storage contient de le produit avec l'option ->modification de la quantité
-    // si le local storage ne le contient pas, ajout du produit avec option et quantité
+    
+    var addPanier = function(name, quantity, lenses, price) {
 
+        var items = JSON.parse(localStorage.getItem('produit')) || [];
+
+        var item = items.find(item => item.name === name);
+      
+        // Si le local storage contient le produit avec l'option ->modification de la quantité
+        if (item) {
+            item.quantity += quantity;
+        } 
+        // si le local storage ne le contient pas, ajout du produit avec option et quantité    
+        else {
+            items.push({
+                name,
+                quantity,
+                lenses,
+                price
+          })
+        }
+
+        localStorage.setItem('produit', JSON.stringify(items));
+        console.log(items);
+    }
+      
+            
     //affichage du panier
-
+    
 }
-//Le choix d'une quantité
-/*
-// let quantiteProduit = document.querySelector("#quantity-product").value; 
-  //sélection des options
-  const selectLenses = document.querySelector("#option_lense");
-  console.log(selectLenses);
 
-  //Le choix de l'utilisateur
-  const choixLenses = selectLenses.value; 
-  console.log(choixLenses);
-
-   //Récupération du choix de l'utilisateur
-   let produitSelection = {
-    nom: camera.name,
-    id: camera._id,
-    option: choixLenses,
-    quantite: quantiteProduit,
-    prix:  camera.price / 100,
-     }
-      console.log(produitSelection);
-  
-          console.log(localStorage.getItem("produit"));
-         //si déja produits enregistrés
-          if(localStorage.getItem("produit") ) {
-            let produitEnregistre = JSON.parse(localStorage.getItem("produit"));
-              produitEnregistre.push(produitSelection);
-              localStorage.setItem("produit", JSON.stringify(produitSelection)) 
-              console.log(produitEnregistre);              
-              
-          }  else {
-              //Local storage vide
-              let produitEnregistre = [];
-              produitEnregistre.push(produitSelection);
-              localStorage.setItem("produit", JSON.stringify(produitSelection)) 
-              console.log(produitEnregistre);
-              
-          }
-          
-*/
+function fenetreConfirmation() {
+    if(window.confirm(`Votre article a bien été ajouté au panier ! Appuyez sur OK pour consulter le panier ou sur ANNULER pour revenir à la page d'accueil`)) {
+            window.location.href ="panier.html";
+        }
+        else{
+            window.location.href ="index.html";
+        }
+}
 
 
 
