@@ -23,7 +23,7 @@ const createProduct = (item) =>{
                             <option>10+</option>
                         </select>
 
-                        <button onclick="fenetreConfirmation()" id="addToCart" class="btn btn-panier border-dark addPanier" type="button">Ajouter au panier</button>
+                        <button id="addToCart" class="btn btn-panier border-dark addPanier" type="button">Ajouter au panier</button>
                     </div>
                 </div>       
             </div>` ;
@@ -77,35 +77,58 @@ function addItemToCart(item)
    let selectLenses = document.querySelector("#option_lense");
 
    let choixLenses = selectLenses.value; 
-
    //récupération de la quantité
    let quantiteProduit = document.querySelector("#quantity-product").value; 
-
     //traitement du local storage
     
-    var addPanier = function(name, quantity, lenses, price) {
+   
 
-        var items = JSON.parse(localStorage.getItem('produit')) || [];
+    let items = JSON.parse(localStorage.getItem('produit')) ;
+    console.log(typeof(items));
+    let name=item.name;
+    let price=item.price;
 
-        var item = items.find(item => item.name === name);
-      
-        // Si le local storage contient le produit avec l'option ->modification de la quantité
-        if (item) {
-            item.quantity += quantity;
-        } 
-        // si le local storage ne le contient pas, ajout du produit avec option et quantité    
-        else {
-            items.push({
-                name,
-                quantity,
-                lenses,
-                price
-          })
-        }
+    let productToAdd=(
+        name,
+        quantiteProduit,
+        choixLenses,
+        price
+    );
 
-        localStorage.setItem('produit', JSON.stringify(items));
-        console.log(items);
+    //var item = items.find(item => item.name === name);
+    
+    console.log(items);
+    // Si le local storage contient le produit avec l'option ->modification de la quantité
+    if (items === null) {
+        items=[];
+    // si le local storage ne le contient pas, ajout du produit avec option et quantité    
+        console.log("items vide");
+        items.push(productToAdd);
     }
+    else {
+        let resent=false;
+        console.log("items non vide");
+        for (let itemInLS of items) {
+            console.log(itemInLS);
+        };
+       /* items.forEach (itemInLS => {
+                if ( itemInLS.name===name && itemInLS.lenses===choixLenses) {
+                    itemInLS.quantity += quantiteProduit;
+                    present=true;
+                }
+            }
+        );*/
+        if (!present) {
+            items.push(productToAdd);
+        }
+        console.log(items);
+    } 
+
+    localStorage.setItem('produit', JSON.stringify(items));
+    console.log(items);
+
+    // fenetreConfirmation();
+    
       
             
     //affichage du panier
