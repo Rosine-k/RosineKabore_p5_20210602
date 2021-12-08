@@ -70,6 +70,12 @@ fetch(urlProduct)
     
 });
 
+function razLS()
+{
+
+    localStorage.setItem('produit', JSON.stringify([]));
+    console.log('RAZ localstorage');
+}
 
 function addItemToCart(item)
 {
@@ -81,47 +87,52 @@ function addItemToCart(item)
    let quantiteProduit = document.querySelector("#quantity-product").value; 
     //traitement du local storage
     
-   
 
     let items = JSON.parse(localStorage.getItem('produit')) ;
-    console.log(typeof(items));
+   
+    let present=false;
     let name=item.name;
     let price=item.price;
+    let id=item._id;
 
-    let productToAdd=(
-        name,
-        quantiteProduit,
-        choixLenses,
-        price
-    );
+    let productToAdd={
+        'id':id,
+        'nom':name,
+        'quantity':quantiteProduit,
+        'lenses':choixLenses,
+        'price':price
+    };
 
     //var item = items.find(item => item.name === name);
     
-    console.log(items);
+
     // Si le local storage contient le produit avec l'option ->modification de la quantité
-    if (items === null) {
-        items=[];
+    if ( items.length==0) {
+        
     // si le local storage ne le contient pas, ajout du produit avec option et quantité    
         console.log("items vide");
         items.push(productToAdd);
     }
     else {
-        let resent=false;
         console.log("items non vide");
         for (let itemInLS of items) {
+            if ( itemInLS.name===name && itemInLS.lenses===choixLenses) {
+                itemInLS.quantity += quantiteProduit;
+                present=true;
+            }
             console.log(itemInLS);
         };
        /* items.forEach (itemInLS => {
-                if ( itemInLS.name===name && itemInLS.lenses===choixLenses) {
-                    itemInLS.quantity += quantiteProduit;
-                    present=true;
-                }
+
             }
         );*/
         if (!present) {
+            console.log('non présent');
             items.push(productToAdd);
+        } else {
+            console.log('présent');
+
         }
-        console.log(items);
     } 
 
     localStorage.setItem('produit', JSON.stringify(items));
