@@ -109,16 +109,17 @@ function addItemToCart(item)
     // Si le local storage contient le produit avec l'option ->modification de la quantité
     if ( items.length==0) {
         
-    // si le local storage ne le contient pas, ajout du produit avec option et quantité    
         console.log("items vide");
         items.push(productToAdd);
     }
+    // si le local storage ne le contient pas, ajout du produit avec option et quantité
     else {
         console.log("items non vide");
         for (let itemInLS of items) {
-            if ( itemInLS.name===name && itemInLS.lenses===choixLenses) {
+            if (Array.isArray(items) && array.lenght) {
                 itemInLS.quantity += quantiteProduit;
-                present=true;
+                present= true;
+                
             }
             console.log(itemInLS);
         };
@@ -140,9 +141,6 @@ function addItemToCart(item)
 
     // fenetreConfirmation();
     
-      
-            
-    //affichage du panier
     
 }
 
