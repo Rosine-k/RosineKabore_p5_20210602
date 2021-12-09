@@ -84,7 +84,7 @@ function addItemToCart(item)
 
    let choixLenses = selectLenses.value; 
    //récupération de la quantité
-   let quantiteProduit = document.querySelector("#quantity-product").value; 
+   let quantiteProduit = parseInt( document.querySelector("#quantity-product").value); 
     //traitement du local storage
     
 
@@ -97,7 +97,7 @@ function addItemToCart(item)
 
     let productToAdd={
         'id':id,
-        'nom':name,
+        'name':name,
         'quantity':quantiteProduit,
         'lenses':choixLenses,
         'price':price
@@ -109,24 +109,22 @@ function addItemToCart(item)
     // Si le local storage contient le produit avec l'option ->modification de la quantité
     if ( items.length==0) {
         
-        console.log("items vide");
+        
         items.push(productToAdd);
     }
     // si le local storage ne le contient pas, ajout du produit avec option et quantité
     else {
-        console.log("items non vide");
+
         for (let itemInLS of items) {
-            if (Array.isArray(items) && array.lenght) {
-                itemInLS.quantity += quantiteProduit;
+            
+            if (itemInLS.name===name && itemInLS.lenses===choixLenses) {
+                console.log('trouvé !');
+                itemInLS.quantity +=   quantiteProduit;
                 present= true;
                 
             }
             console.log(itemInLS);
         };
-       /* items.forEach (itemInLS => {
-
-            }
-        );*/
         if (!present) {
             console.log('non présent');
             items.push(productToAdd);
