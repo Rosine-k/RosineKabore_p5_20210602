@@ -1,0 +1,80 @@
+.bgc-primary {
+    background-color: #f3e9f1;
+  }
+  
+  footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  ul li {
+    list-style-type: none;
+  }
+  
+  h5 {
+    padding-top: 0.7rem;
+    margin-left: 1.5rem;
+  }
+  
+  a:link {
+    text-decoration: none;
+  }
+  
+  body {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .black {
+    color: black;
+  }
+  
+  img {
+    object-fit: contain;
+  }
+  
+  a:link {
+    text-decoration: none;
+  }
+  
+  .fas {
+    color: #965fe9;
+    width: 2em;
+    height: 2em;
+  }
+  
+  .basket {
+    font-weight: 500;
+  }
+  
+  @media only screen and (min-width: 250px) and (max-width: 450px) {
+    .logo {
+      height: 3em;
+      width: 3em;
+    }
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 17vw;
+    object-fit: cover;
+  }
+  
+  .heading_title1 {
+    margin-top: 1em;
+  }
+  
+  .heading_title2 {
+    margin-bottom: 1.5em;
+  }
+  
+  .card {
+    margin-bottom: 1.5em;
+  }
+  
+  .card-price, .font-weight-bold {
+    font-weight: bolder;
+  }
+  
+  
