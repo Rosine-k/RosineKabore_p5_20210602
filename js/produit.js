@@ -58,7 +58,6 @@ let idProduct = params.get('id');
 
 let urlProduct = URL_API + '/' + idProduct;
 
-
 fetch(urlProduct)
 .then(response => response.json())
 .then(item => {
@@ -83,10 +82,11 @@ function addItemToCart(item)
    let selectLenses = document.querySelector("#option_lense");
 
    let choixLenses = selectLenses.value; 
+
    //récupération de la quantité
    let quantiteProduit = parseInt( document.querySelector("#quantity-product").value); 
+
     //traitement du local storage
-    
 
     let items = JSON.parse(localStorage.getItem('produit')) ;
    
@@ -102,16 +102,14 @@ function addItemToCart(item)
         'lenses':choixLenses,
         'price':price
     };
-
-    //var item = items.find(item => item.name === name);
-    
-
+ 
     // Si le local storage contient le produit avec l'option ->modification de la quantité
     if ( items.length==0) {
         
         
         items.push(productToAdd);
     }
+
     // si le local storage ne le contient pas, ajout du produit avec option et quantité
     else {
 
@@ -120,8 +118,7 @@ function addItemToCart(item)
             if (itemInLS.name===name && itemInLS.lenses===choixLenses) {
                 console.log('trouvé !');
                 itemInLS.quantity +=   quantiteProduit;
-                present= true;
-                
+                present= true;   
             }
             console.log(itemInLS);
         };
@@ -130,16 +127,14 @@ function addItemToCart(item)
             items.push(productToAdd);
         } else {
             console.log('présent');
-
         }
     } 
 
     localStorage.setItem('produit', JSON.stringify(items));
     console.log(items);
 
-    // fenetreConfirmation();
-    
-    
+     fenetreConfirmation();
+      
 }
 
 function fenetreConfirmation() {
@@ -150,7 +145,3 @@ function fenetreConfirmation() {
             window.location.href ="index.html";
         }
 }
-
-
-
-
