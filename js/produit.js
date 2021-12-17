@@ -78,6 +78,7 @@ function razLS()
 
 function addItemToCart(item)
 {
+    
    //récupération de l'option
    let selectLenses = document.querySelector("#option_lense");
 
@@ -90,24 +91,27 @@ function addItemToCart(item)
 
     let items = JSON.parse(localStorage.getItem('produit')) ;
    
-    let present=false;
-    let name=item.name;
-    let price=item.price;
-    let id=item._id;
+    let present = false;
+    let name = item.name;
+    let price = item.price;
+    let id = item._id;
 
     let productToAdd={
-        'id':id,
-        'name':name,
-        'quantity':quantiteProduit,
-        'lenses':choixLenses,
-        'price':price
+        'id': id,
+        'name': name,
+        'quantity': quantiteProduit,
+        'lenses': choixLenses,
+        'price': price
     };
- 
+   
+    if (items=== null ) {
+        items = [];
+    }
     // Si le local storage contient le produit avec l'option ->modification de la quantité
-    if ( items.length==0) {
-        
-        
+    if (items.length==0) {
+         console.log('ajout panier');   
         items.push(productToAdd);
+
     }
 
     // si le local storage ne le contient pas, ajout du produit avec option et quantité
