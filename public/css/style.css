@@ -1,4 +1,4 @@
-.bgc-primary {
+  .bgc-primary {
     background-color: #f3e9f1;
   }
   
@@ -75,6 +75,11 @@
   
   .card-price, .font-weight-bold {
     font-weight: bolder;
+  }
+
+  .btn:hover {
+    box-shadow: 1px 1px 6px #7e7e7e;
+    transition: transform 200ms;
   }
   
   
