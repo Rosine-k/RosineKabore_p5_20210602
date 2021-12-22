@@ -1,20 +1,40 @@
-// vérification de la validité des champs du formulaire
-function test() {
-    'use strict'
-    
-    var forms = document.querySelectorAll('.needs-validation')
-    
-    Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-        
-        form.classList.add('was-validated')
-      }, false)
-    })
+// vérification de la validité des champs du formulaire                                 
+  function validation () {
+    var firstname = document.getElementById('firstname').value;
+    var lastname = document.getElementById('lastname').value;
+    var adresse = document.getElementById('adress').value;
+    var ville = document.getElementById('city').value;
+    var mail = document.getElementById('email').value;
+    var error = document.getElementById('error').value;
+    var text;
+
+    if(firstname.length <5){
+      text = "Entrez un prénom valide";
+      error = text;
+      return false;
+    }
+    if(lastname.length <5){
+      text = "Entrez un nom valide";
+      error = text;
+      return false;
+    }
+    if(adresse.length <10){
+      text = "Entrez une adresse valide";
+      error = text;
+      return false;
+    }
+    if(ville.length <5){
+      text = "Entrez une ville valide";
+      error = text;
+      return false;
+    }
+    if(mail.indexOf("@") == -1 || mail.length <6){
+      text = "Entrez une adresse mail valide";
+      error = text;
+      return false;
+    }
+
+    return false;
   }
 
 // vider le panier
