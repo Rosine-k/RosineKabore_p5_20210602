@@ -81,5 +81,12 @@
     box-shadow: 1px 1px 6px #7e7e7e;
     transition: transform 200ms;
   }
-  
-  
+
+
+  .form-control {
+    margin-bottom: 1rem;
+  }
+
+  .btn-validation {
+    margin: 1rem;
+  }
