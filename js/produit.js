@@ -133,7 +133,7 @@ function addItemToCart(item) {
     localStorage.setItem('produit', JSON.stringify(items));
     console.log(items);
 
-     fenetreConfirmation();
+     //fenetreConfirmation();
       
 }
 
