@@ -1,4 +1,5 @@
-const createProduct = (item) =>{
+// affichage du produit
+const createProduct = (item) => {
     return `<div class="col-sm-8 mx-auto">
                 <div class="card">
                     <img class="card-img-top" src="${item.imageUrl}" width="250" height="250" alt="camera">
@@ -31,23 +32,20 @@ const createProduct = (item) =>{
 }
 
 
-function showProduct(camera)
-{
+function showProduct(camera) {
     document.querySelector(".card-produit").innerHTML += camera;
 }
 
 
-function AddEventAddToCart(item)
-{
+function AddEventAddToCart(item) {
     document.getElementById("addToCart").addEventListener("click",function() { addItemToCart(item);},false);
 }
 
 
-function addOption(item)
-{
+function addOption(item) {
     for(let lense of item.lenses) {
         document.querySelector(".lenses").innerHTML += `<option>${lense}</option>`;
-       }
+    }
 }
 
 
@@ -69,15 +67,13 @@ fetch(urlProduct)
     
 });
 
-function razLS()
-{
+function razLS() {
 
     localStorage.setItem('produit', JSON.stringify([]));
     console.log('RAZ localstorage');
 }
 
-function addItemToCart(item)
-{
+function addItemToCart(item) {
     
    //récupération de l'option
    let selectLenses = document.querySelector("#option_lense");
@@ -109,7 +105,7 @@ function addItemToCart(item)
     }
     // Si le local storage contient le produit avec l'option ->modification de la quantité
     if (items.length==0) {
-         console.log('ajout panier');   
+        console.log('ajout panier');   
         items.push(productToAdd);
 
     }
