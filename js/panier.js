@@ -1,7 +1,3 @@
-// récupération du local storage
-localStorage.getItem("produit");
-
-
 // affichage des produits
 const createBasket = (item) =>{
   return `<div class="col-sm-6">
@@ -19,7 +15,7 @@ const createBasket = (item) =>{
           
 }
 
-function showPanier(camera) {
+function showBasket(camera) {
 
   document.querySelector(".panier-commande").innerHTML += camera;
   console.log('fonctionne');
@@ -81,9 +77,10 @@ async function addBasket() {
       for (i = 0; i < basket.length; i++) {
         let itemCamera = cameras.find(cameras => cameras['_id'] == basket[i].idCamera);
         console.log(itemCamera);
-        createBasket(itemCamera, basket);
+        createBasket(item);
         addPrice(itemCamera);
         addProducts(basket);
+        showBasket(camera)
       }
       totalPriceOrder(arrayPrice);
 
@@ -116,9 +113,9 @@ function deleteBasket() {
 
 // récupération de l'id de commande et stockage dans le localStorage
 function orderConfirmationId(responseId) {
-    let orderId = responseId.orderId;
-    console.log(orderId);
-    localStorage.setItem("orderConfirmationId", orderId);
+  let orderId = responseId.orderId;
+  console.log(orderId);
+  localStorage.setItem("orderConfirmationId", orderId);
 }
 
 
@@ -163,22 +160,23 @@ function confirmationOrder() {
 }
 
 // vérification de la validité des champs du formulaire                                 
-  function validation () {
+function validation () {
 
-    let boutonvalidation = document.getElementById('btn-validation');
-    boutonvalidation.addEventListener('click', function () {
-      let firstname = document.getElementById('firstname').value;
-      let lastname = document.getElementById('lastname').value;
-      let adresse = document.getElementById('adress').value;
-      let ville = document.getElementById('city').value;
-      let mail = document.getElementById('email').value;
+  let boutonvalidation = document.getElementById('btn-validation');
+  boutonvalidation.addEventListener('click', function () {
+    let firstname = document.getElementById('firstname').value;
+    let lastname = document.getElementById('lastname').value;
+    let adresse = document.getElementById('adress').value;
+    let ville = document.getElementById('city').value;
+    let mail = document.getElementById('email').value;
 
-      if (firstname, lastname, addresse, ville, mail != "" && /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-        confirmationOrder();
-        return true;
-    } else {
-        alert("Saisissez des champs valides");
-        return false;
+    if (firstname, lastname, addresse, ville, mail != "" && /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+      confirmationOrder();
+      return true;
     }
-})
+    else {
+      alert("Veuillez saisir des champs valides");
+      return false;
+    }
+} )
 } 
