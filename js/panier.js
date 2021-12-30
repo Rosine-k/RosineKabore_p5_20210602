@@ -1,25 +1,53 @@
-// affichage des produits
-const createBasket = (item) =>{
+// code html du produit
+const createBasket = (response) =>{
   return `<div class="col-sm-6">
             <div class="card">
-              <img class="card-img-top" src="${item.imageUrl}" width="100" height="100" alt="zurss">
+              <img class="card-img-top" src="${response.imageUrl}" width="100" height="100" alt="zurss">
               <div class="card-body bgc-primary">
-                <h2 class="card-title black">${item.name}</h2>
-                <div class="quantity-panier">Quantité: ${item.quantiteProduit}</div>
-                <div class="option-panier">Option: ${item.selectLenses}</div>
-                <div class="card-text prix-total"> €</div>
+                <h2 class="card-title black">${response.name}</h2>
+                <div class="quantity-panier">Quantité: ${response.quantity}</div>
+                <div class="option-panier">Option: ${response.lenses}</div>
+                <div class="card-text prix">${formatPrice(response.price)} €</div>
                 <button class="btn btn-remove border-dark" type="button">Supprimer</button>
               </div>
             </div>        
           </div>`;
-          
+     
 }
 
+// Ajout des articles
+function addProducts(createBasket) {
+  
+  produits.push(createBasket[i]._id);
+  
+}
+
+
+//ajout et calcul du prix total
+function addPrice(item) {
+  
+  let itemPrice = item.price;
+  arrayPrice.push(itemPrice);
+}
+ 
+function totalPrice(arrayPrice) {
+  let totalPrice = document.getElementsByClassName('prix-total');
+  let total = 0;
+  for (i = 0; i < arrayPrice.length; i++) {
+    total = total + arrayPrice[i];
+    totalPrice.textContent = "Total : " + total;
+        
+    localStorage.setItem("totalCommande", JSON.stringify(total));
+  }
+}
+
+
+//insère le code html
 function showBasket(camera) {
-
-  document.querySelector(".panier-commande").innerHTML += camera;
-  console.log('fonctionne');
+  document.querySelector(".card-panier").innerHTML += camera;
+  
 }
+
 
 // tableau de stockage
 const arrayPrice = [];
@@ -38,34 +66,6 @@ class Utilisateur {
   }
 }
 
-
-// Ajout des articles
-function addProducts(createBasket) {
-  
-  produits.push(createBasket[i]._id);
-  
-}
-
-
-//ajout et calcul du prix total
-function addPrice(item) {
-  
-  let itemPrice = item.price;
-  arrayPrice.push(itemPrice);
-}
- 
-function totalPrice(arrayPrice) {
-  let totalPrice = document.getElementById('prix-total');
-  let total = 0;
-  for (i = 0; i < arrayPrice.length; i++) {
-    total = total + arrayPrice[i];
-    totalPrice.textContent = "Total : " + total;
-        
-    localStorage.setItem("totalCommande", JSON.stringify(total));
-  }
-}
-
-
 // Création du panier
 async function addBasket() {
   try {
@@ -76,13 +76,13 @@ async function addBasket() {
 
       for (i = 0; i < basket.length; i++) {
         let itemCamera = cameras.find(cameras => cameras['_id'] == basket[i].idCamera);
-        console.log(itemCamera);
-        createBasket(item);
+
+        let camera = createBasket(response);
         addPrice(itemCamera);
         addProducts(basket);
         showBasket(camera)
       }
-      totalPriceOrder(arrayPrice);
+      totalPrice(arrayPrice);
 
     } else {
         console.error('Retour du serveur : ', response.status);
@@ -94,89 +94,75 @@ async function addBasket() {
 }
 
 
-// supprimer le contenu du panier
-function deleteBasket() {
-  let buttonClear = document.getElementById('btn-clean-basket');
-
-  buttonClear.addEventListener('click', function () {
-    localStorage.removeItem('produit');
-    localStorage.removeItem('totalCommande');
-    let clearBasket = document.getElementById('panier-commande');
-    while (clearBasket.firstChild) {
-      clearBasket.removeChild(clearBasket.firstChild);
-      let totalPrice = document.getElementById('panier-commande');
-      totalPrice.textContent = "Total : 0 €";
-    }
-
-  })
-}
-
-// récupération de l'id de commande et stockage dans le localStorage
-function orderConfirmationId(responseId) {
-  let orderId = responseId.orderId;
-  console.log(orderId);
-  localStorage.setItem("orderConfirmationId", orderId);
-}
 
 
-//Récupération des données du formulaire dans l'objet contact
-function getForm() {
-  let firstname = document.getElementById('firstName').value;
-  let lastname = document.getElementById('lastName').value;
-  let address = document.getElementById('address').value;
-  let city = document.getElementById('city').value;
-  let email = document.getElementById('email').value;
-  contact = new Utilisateur(firstname, lastname, address, city, email);
-}
 
-//Requête POST pour envoyer l'objet Contact et le tableau products à l'API
-async function postForm(dataToSend) {
-  try {
-    let response = await fetch("http://localhost:3000/api/cameras/order", {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: dataToSend,
-    });
-    if (response.ok) {
-      let responseId = await response.json();
-      orderConfirmationId(responseId);
-      window.location.href = "confirmation.html";
-    } else {
-        console.error('Retour du serveur : ', response.status);
+//supprimer des produits du panier
+const deleteProduct = (data, productQuantity) =>{
+  //supprimer le code html du produit de la page du panier
+  document.getElementById('').removeChild(document.getElementById());
+
+  //supprimer le produit de la sessionStorage
+  let arrayCart = JSON.parse(sessionStorage.getItem('produit'));
+  for (let product of arrayCart){
+      if(product.id === data._id){
+          arrayCart = arrayCart.filter(x => x !== product);
       }
-  } catch (e) {
-      console.log(e);
-    }
+  }
+  sessionStorage.setItem('produit', JSON.stringify(arrayCart)); 
+
+  //Mettre à jour le prix total des produits achetés
+  let currentPrice =  parseFloat(sessionStorage.getItem('prixTotal')) - (data.price * productQuantity);
+  sessionStorage.setItem('prixTotal', currentPrice);
+
+  //Mettre en forme le prix total mis à jour avant l'insertion dans la page
+  currentPrice = priceFormat(sessionStorage.getItem('prixTotal'));
+  document.getElementById('prixTotal').textContent = "TOTAL (TTC) : " + currentPrice;
+
+  //Vider la sessionStorage si tous les produits sont supprimés du panier
+  if(JSON.parse(sessionStorage.getItem('prixTotal')) == 0){
+      sessionStorage.clear();
+      document.location.reload();
+  }
 }
 
-//Validation de la commande et envoie de l'objet contact et du tableau product à l'API
-function confirmationOrder() {
-  getForm();
-  dataToSend = JSON.stringify({ contact, produits });
-  console.log(dataToSend);
-  postForm(dataToSend);
-}
 
-// vérification de la validité des champs du formulaire                                 
-function validation () {
+//Envoi des données du formulaire au serveur
+ form.addEventListener("submit", (e) =>{
 
-  let boutonvalidation = document.getElementById('btn-validation');
-  boutonvalidation.addEventListener('click', function () {
-    let firstname = document.getElementById('firstname').value;
-    let lastname = document.getElementById('lastname').value;
-    let adresse = document.getElementById('adress').value;
-    let ville = document.getElementById('city').value;
-    let mail = document.getElementById('email').value;
+  e.preventDefault();
 
-    if (firstname, lastname, addresse, ville, mail != "" && /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-      confirmationOrder();
-      return true;
-    }
-    else {
-      alert("Veuillez saisir des champs valides");
-      return false;
-    }
-} )
-} 
+  let arrayCart = JSON.parse(sessionStorage.getItem('produit'));
+
+  let idProducts = [];
+  
+  for(let product of arrayCart){
+    idProducts.push(product.id);
+  }
+  
+  fetch("http://localhost:3000/api/cameras/order", {
+
+  method: "POST",
+  headers: {
+    Accept: 'application/json',
+    "Content-Type": "application/json; charset=UTF-8"
+  },
+  body: JSON.stringify({
+    contact: {
+      firstName: form.elements.firstName.value,
+      lastName: form.elements.lastName.value,
+      address: form.elements.address.value,
+      city: form.elements.city.value,
+      email: form.elements.email.value
+
+    },
+    products: idProducts
+  })
+    
+})
+.then(response => response.json())
+
+.then(response => document.location.href=`confirmation.html?idCommande=${response.orderId}&pseudo=${form.elements.firstName.value}`);
+
+
+})

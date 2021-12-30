@@ -63,8 +63,7 @@ fetch(urlProduct)
     let camera = createProduct(item);
     showProduct(camera);
     addOption(item)
-    AddEventAddToCart(item);
-    
+    AddEventAddToCart(item);   
 });
 
 function razLS() {
@@ -133,7 +132,7 @@ function addItemToCart(item) {
     localStorage.setItem('produit', JSON.stringify(items));
     console.log(items);
 
-     //fenetreConfirmation();
+     fenetreConfirmation();
       
 }
 
