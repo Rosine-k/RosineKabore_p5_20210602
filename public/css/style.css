@@ -90,3 +90,18 @@
   .btn-validation {
     margin: 1rem;
   }
+
+  table {
+    border-collapse: collapse;
+    width: 400px;
+    padding: 10px;
+    border: black solid 1px;
+    text-align: center;
+
+  }
+
+  td, th {
+    border: 1px solid black;
+    padding: 10px;
+    vertical-align: middle;
+  }
