@@ -1,54 +1,3 @@
-// code html du produit
-const createBasket = (response) =>{
-  return `<div class="col-sm-6">
-            <div class="card">
-              <img class="card-img-top" src="${response.imageUrl}" width="100" height="100" alt="zurss">
-              <div class="card-body bgc-primary">
-                <h2 class="card-title black">${response.name}</h2>
-                <div class="quantity-panier">Quantité: ${response.quantity}</div>
-                <div class="option-panier">Option: ${response.lenses}</div>
-                <div class="card-text prix">${formatPrice(response.price)} €</div>
-                <button class="btn btn-remove border-dark" type="button">Supprimer</button>
-              </div>
-            </div>        
-          </div>`;
-     
-}
-
-// Ajout des articles
-function addProducts(createBasket) {
-  
-  produits.push(createBasket[i]._id);
-  
-}
-
-
-//ajout et calcul du prix total
-function addPrice(item) {
-  
-  let itemPrice = item.price;
-  arrayPrice.push(itemPrice);
-}
- 
-function totalPrice(arrayPrice) {
-  let totalPrice = document.getElementsByClassName('prix-total');
-  let total = 0;
-  for (i = 0; i < arrayPrice.length; i++) {
-    total = total + arrayPrice[i];
-    totalPrice.textContent = "Total : " + total;
-        
-    localStorage.setItem("totalCommande", JSON.stringify(total));
-  }
-}
-
-
-//insère le code html
-function showBasket(camera) {
-  document.querySelector(".card-panier").innerHTML += camera;
-  
-}
-
-
 // tableau de stockage
 const arrayPrice = [];
 
@@ -66,27 +15,93 @@ class Utilisateur {
   }
 }
 
+
+//appel de la function showBaskets pour afficher le panier
+showBaskets();
+
+// Ajout de l'id des articles au tableau
+function addProducts(basket) {
+  
+  produits.push(basket[i]._id);
+  
+}
+
+
+//ajout et calcul du prix total
+function addPrice(itemCamera) {
+  
+  let itemPrice = itemCamera.price;
+  arrayPrice.push(itemPrice);
+}
+ 
+function totalPrice(arrayPrice) {
+  let totalPrice = document.getElementsByClassName('prix-total');
+  let total = 0;
+  for (i = 0; i < arrayPrice.length; i++) {
+    total = total + arrayPrice[i];
+    totalPrice.textContent = "Total : " + total;
+        
+    localStorage.setItem("totalCommande", JSON.stringify(total));
+  }
+}
+
+
+//insère le code html
+function showBasket(camera, basket) {
+  document.querySelector(".card-panier").innerHTML += `<div class="col-sm-9">
+                                                        <table class=" table table-bordered bgc-primary">                                                    
+
+                                                          <tbody>
+                                                            <tr>
+                                                             <td><img class="img" src="${camera.imageUrl}" width="150" height="150" alt="appareil"></td>
+                                                              <td class="black">${camera.name}</td>
+                                                              <td class="quantity-panier">Quantité: ${basket.quantity}</td>
+                                                              <td class="option-panier">Option: ${basket.lenses}</td>
+                                                              <td class="prix">${formatPrice(basket.price)} €</td>
+                                                              <td><button class="btn btn-remove border-dark" type="button"><i class="fas fa-trash-alt"></i></button></td>
+                                                            </tr>
+                                                          </tbody>
+
+                                                        </table>   
+                                                        
+                                                        <div class="prix-total"></div>
+                                                      </div>`;
+  
+}
+
+
+
+function findproduct(cameras,id)
+{
+  for (i = 0; i < cameras.length; i++) {
+    if(cameras[i]._id==id) {
+      return cameras[i];
+    }
+  }
+}
+
+
 // Création du panier
-async function addBasket() {
+async function showBaskets() {
   try {
     let response = await fetch(URL_API);
     if (response.ok) {
       let cameras = await response.json();
+      
       let basket = JSON.parse(localStorage.getItem("produit")) || {};
-
       for (i = 0; i < basket.length; i++) {
-        let itemCamera = cameras.find(cameras => cameras['_id'] == basket[i].idCamera);
-
-        let camera = createBasket(response);
-        addPrice(itemCamera);
-        addProducts(basket);
-        showBasket(camera)
+        
+        let itemCamera = findproduct(cameras,basket[i].id);
+       
+        //addPrice(item);
+        //addProducts(basket);
+        showBasket(itemCamera,basket[i] )
       }
-      totalPrice(arrayPrice);
+      //totalPrice(arrayPrice);
 
     } else {
         console.error('Retour du serveur : ', response.status);
-      }
+    }
   }
   catch (e) {
     console.log(e);
