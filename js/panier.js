@@ -34,16 +34,6 @@ function addPrice(itemCamera) {
   arrayPrice.push(itemPrice);
 }
  
-function totalPrice(arrayPrice) {
-  let totalPrice = document.getElementsByClassName('prix-total');
-  let total = 0;
-  for (i = 0; i < arrayPrice.length; i++) {
-    total = total + arrayPrice[i];
-    totalPrice.textContent = "Total : " + total;
-        
-    localStorage.setItem("totalCommande", JSON.stringify(total));
-  }
-}
 
 
 //insère le code html
@@ -68,7 +58,6 @@ function showBasket(camera, basket) {
                                                       </div>`;
   
 }
-
 
 
 function findproduct(cameras,id)
@@ -97,7 +86,6 @@ async function showBaskets() {
         //addProducts(basket);
         showBasket(itemCamera,basket[i] )
       }
-      //totalPrice(arrayPrice);
 
     } else {
         console.error('Retour du serveur : ', response.status);
@@ -109,75 +97,47 @@ async function showBaskets() {
 }
 
 
+//Mis à jour du prix d'un produit en fonction de la quantité 
+const updatePrice = (camera, newQuantity, lastQuantity) =>{
 
+  //calculer la différence avec le prix envoyé précédemment
+  let diffrence = (camera.price) * (newQuantity - lastQuantity);
 
+  //mettre à jour le prix total actuel
+  let currentTotalPrice = parseFloat(sessionStorage.getItem('prixTotal'));
+  let updatedTotalPrice = currentTotalPrice + diffrence;
+  sessionStorage.setItem('prixTotal', updatedTotalPrice);
 
-//supprimer des produits du panier
-const deleteProduct = (data, productQuantity) =>{
-  //supprimer le code html du produit de la page du panier
-  document.getElementById('').removeChild(document.getElementById());
-
-  //supprimer le produit de la sessionStorage
-  let arrayCart = JSON.parse(sessionStorage.getItem('produit'));
-  for (let product of arrayCart){
-      if(product.id === data._id){
-          arrayCart = arrayCart.filter(x => x !== product);
-      }
-  }
-  sessionStorage.setItem('produit', JSON.stringify(arrayCart)); 
-
-  //Mettre à jour le prix total des produits achetés
-  let currentPrice =  parseFloat(sessionStorage.getItem('prixTotal')) - (data.price * productQuantity);
-  sessionStorage.setItem('prixTotal', currentPrice);
-
-  //Mettre en forme le prix total mis à jour avant l'insertion dans la page
-  currentPrice = priceFormat(sessionStorage.getItem('prixTotal'));
-  document.getElementById('prixTotal').textContent = "TOTAL (TTC) : " + currentPrice;
-
-  //Vider la sessionStorage si tous les produits sont supprimés du panier
-  if(JSON.parse(sessionStorage.getItem('prixTotal')) == 0){
-      sessionStorage.clear();
-      document.location.reload();
-  }
+  //récupérer le nouveau prix et l'insérer dans la page
+  let newProductPrice = (camera.price) * (newQuantity);
+  newProductPrice = formatPrice(newProductPrice);
+  document.getElementById(camera.name + "_" + camera._id).textContent = newProductPrice;
+  
+  //récupérer le nouveau prix total et l'insérer dans la page
+  updatedTotalPrice = formatPrice(updatedTotalPrice);
+  document.getElementsByClassName('prix-total').textContent = "TOTAL : " + updatedTotalPrice;
 }
 
 
-//Envoi des données du formulaire au serveur
- form.addEventListener("submit", (e) =>{
+// Bouton pour supprimer un article
+const removePanier = document.querySelectorAll(".btn-remove");
+ removePanier.forEach((btn, i) => {
+    btn.addEventListener('click', e => {
+      deleteItemSelect(i);
+    });
 
-  e.preventDefault();
+   //Mettre à jour le prix total 
+   let majPrice =  parseFloat(sessionStorage.getItem('prixTotal')) - (data.price * productQuantity);
+   sessionStorage.setItem('prixTotal', majPrice);
 
-  let arrayCart = JSON.parse(sessionStorage.getItem('produit'));
+   //Mettre en forme le prix total
+   majPrice = priceFormat(sessionStorage.getItem('prixTotal'));
+   document.getElementsByClassName('prix-total').textContent = "TOTAL: " + majPrice;
 
-  let idProducts = [];
-  
-  for(let product of arrayCart){
-    idProducts.push(product.id);
-  }
-  
-  fetch("http://localhost:3000/api/cameras/order", {
-
-  method: "POST",
-  headers: {
-    Accept: 'application/json',
-    "Content-Type": "application/json; charset=UTF-8"
-  },
-  body: JSON.stringify({
-    contact: {
-      firstName: form.elements.firstName.value,
-      lastName: form.elements.lastName.value,
-      address: form.elements.address.value,
-      city: form.elements.city.value,
-      email: form.elements.email.value
-
-    },
-    products: idProducts
-  })
+   //Vider le local storage si tous les produits sont supprimés du panier
+   if(JSON.parse(sessionStorage.getItem('prixTotal')) == 0){
+      sessionStorage.clear();
+      document.location.reload();
+   }
     
-})
-.then(response => response.json())
-
-.then(response => document.location.href=`confirmation.html?idCommande=${response.orderId}&pseudo=${form.elements.firstName.value}`);
-
-
-})
+ });  
