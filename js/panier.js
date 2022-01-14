@@ -38,24 +38,17 @@ function addPrice(itemCamera) {
 
 //insère le code html
 function showBasket(camera, basket) {
-  document.querySelector(".card-panier").innerHTML += `<div class="col-sm-9">
-                                                        <table class=" table table-bordered bgc-primary">                                                    
+  document.querySelector(".card-panier").innerHTML += `                                                    
 
-                                                          <tbody>
                                                             <tr>
                                                              <td><img class="img" src="${camera.imageUrl}" width="150" height="150" alt="appareil"></td>
                                                               <td class="black">${camera.name}</td>
-                                                              <td class="quantity-panier">Quantité: ${basket.quantity}</td>
-                                                              <td class="option-panier">Option: ${basket.lenses}</td>
-                                                              <td class="prix">${formatPrice(basket.price)} €</td>
+                                                              <td class="quantity-panier"> ${basket.quantity}</td>
+                                                              <td class="option-panier"> ${basket.lenses}</td>
+                                                              <td class="prix">${formatPrice(basket.price*basket.quantity)} €</td>
                                                               <td><button class="btn btn-remove border-dark" type="button"><i class="fas fa-trash-alt"></i></button></td>
                                                             </tr>
-                                                          </tbody>
-
-                                                        </table>   
-                                                        
-                                                        <div class="prix-total"></div>
-                                                      </div>`;
+                                                      `;
   
 }
 
@@ -84,8 +77,9 @@ async function showBaskets() {
        
         //addPrice(item);
         //addProducts(basket);
-        showBasket(itemCamera,basket[i] )
+        showBasket(itemCamera,basket[i] );
       }
+      showPrice(basket);
 
     } else {
         console.error('Retour du serveur : ', response.status);
@@ -94,6 +88,16 @@ async function showBaskets() {
   catch (e) {
     console.log(e);
   }
+}
+
+function showPrice(basket)
+{
+  let total=0;
+  for (i = 0; i < basket.length; i++) {
+    total += basket[i].price *  basket[i].quantity;
+  }
+  console.log(total);
+  document.querySelector(".prix-total").innerHTML = "TOTAL : " + formatPrice(total)+ " €";
 }
 
 
