@@ -1,18 +1,19 @@
 // création du produit
 const createCamera = (data) =>{
 
-    return `<div class="col-sm-6">
-              <a href="produit.html?id=${data._id}">
-                    <div class="card">
-                        <img class="card-img-top" src="${data.imageUrl}" width="250" height="250" alt="camera">
-                        <div class="card-body bgc-primary">
-                            <h3 class="card-title black">${data.name}</h3>
-                            <h4 class="card-price black">${formatPrice(data.price)} €</h4>
-                            <p class="card-text">Voir le produit</p>
+    return `<figure class="col-sm-4">
+               <a href="produit.html?id=${data._id}">
+                    <img class="img-appareil" src="${data.imageUrl}" width="150" height="150" alt="camera">
+                    <figurecaption class="vignette">
+                        
+                        <div class="info">
+                            <h3 class="title black">${data.name}</h3>
+                            <h4 class="price black">${formatPrice(data.price)} €</h4>
+                            <button class="btn btn-dark text">Voir le produit</button>
                         </div>
-                    </div>       
+                    </figurecaption>       
                 </a> 
-            </div>` ;
+            </figure>` ;
 }
 
 //récupération des produits à partir de l'API

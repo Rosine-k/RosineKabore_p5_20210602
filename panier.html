@@ -17,7 +17,7 @@
 
     <header>
 
-        <div class="bloc d-block w-100 bgc-primary" id="header">
+        <div class="bloc d-block w-100 bgc-linear" id="header">
 
             <div class="container text-center">
 
@@ -50,44 +50,66 @@
 
     <main>
 
-        <div class="bloc d-block w-100" id="panier-title">
+        <div class="d-block mx-2" id="panier-title">
             <div class="container bloc-lg ">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="text-left">Votre panier</h1>
+                         <div class=" col-sm-6">
+                           <a href="index.html"><h1 class="black h4 my-3 mx-3"><u>Continuer vos achats</u></h1></a>
+                        </div>
+                        <div class="col-sm-6">
+                           <h1 class="text-left heading_title2">Votre panier</h1>
+                        </div>
+                       
                     </div>
+                   
+
                 </div>
             </div>
         </div>
 
         <div class="bloc d-block w-100" id="panier-commande">
             <div class="container bloc-lg ">
-                <div class="row justify-content-md-center ">
-                    <div class="col-sm-9">
-                        <table class=" table table-bordered bgc-primary ">
-                            <thead>
-                                <tr>
-                                <th></th>
-                                <th>Nom de l'article</th>
-                                <th>Quantité</th>
-                                <th>Option</th>
-                                <th>Prix total</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody class="card-panier">
-                            </tbody>
-                        </table>
+                <div class="row justify-content-md-center">
+                    <div class="col-sm-6">
+                        <div class="card card-panier ">
+                            <div class="card-body">
+                                <div class="img-panier">
+                                    <img src="${produit.imageUrl}" width="150" height="150" alt="image panier">
+                                </div>
+                                <div class="info-panier flex-column-around">
+                                    <h3 class="black card-title">${produit.name}</h3>
+                                    <p class="option-panier">${produit.lenses}</p>
+                                    <p class="prix">${formatPrice(produit.price*basket.quantity)} €</p>
+                                </div>
+                                <div class="quantite-change flex-around">
+                                    <div class="flex-centre">
+                                        <button class="btn-moins">-</button>
+                                        <span class="quantity-panier">${produit.quantity}</span>
+                                        <button class="btn-plus">+</button>
+                                    </div>
+                                   
+                                    <button class="btn btn-remove my-2 mx-3" type="button"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="col-sm-3">
-                        prix total
-                        <div class="prix-total"></div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>PRIX TOTAL:</h3>
+                                <div class="card-text black bolder prix-total"></div>
+                            </div>
+                        </div>
+                       
+                        
                     </div>
                 </div>
-                <div class="row justify-content-md-center card-panier">
+
+                <div class="row justify-content-md-center">
                     
-
-
                     <div class="col-sm-9 ">
 
                         <h2>Vos coordonnées</h2>
@@ -144,19 +166,30 @@
 
     <footer>
 
-        <div class="bloc d-block w-100 text-center bgc-primary" id="footer">
+        <div class="bloc d-block w-100 text-center bgc-linear" id="footer">
             <div class="container bloc-sm">
                 <div class="row">
-                    <div class="col">
-                        <h5 class="font-weight-bold text-center">Orinoco</h5>
-
-                        <ul class="font-weight-normal text-center">
-                            <li><a href="#" class="black">Nous connaître</a></li>
-                            <li><a href="#" class="black">Contact</a></li>
-                            <li><a href="#" class="black">Conditions générales de vente</a></li>
-                            <li><a href="#" class="black">Vos informations personnelles</a></li>
-                        </ul>
-
+                    <div class="col-sm-12">
+                        <section class="flex-column-centre">
+                            <div class="flex-centre">
+                                <h5 class="font-weight-bold">Orinoco</h5>
+                            </div>
+                            <div class="flex-around reseau-logo">
+                                <a href="#"><i class="fab fa-facebook-square fa-4x"></i></a>
+                                <a href="#"><i class="fab fa-instagram-square fa-4x"></i></a>
+                                <a href="#"><i class="fab fa-pinterest-square fa-4x"></i></a>
+                            </div>                           
+                        </section>
+                        <section>
+                            <div class="footer-text">
+                                <ul class="font-weight-normal text-center">
+                                   <li><a href="#" class="black">Nous connaître</a></li>
+                                   <li><a href="#" class="black">Contact</a></li>
+                                   <li><a href="#" class="black">Conditions générales de vente</a></li>
+                                   <li><a href="#" class="black">Vos informations personnelles</a></li>
+                                </ul>  
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
