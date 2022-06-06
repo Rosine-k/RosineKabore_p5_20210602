@@ -1,15 +1,13 @@
 // affichage du produit
 const createProduct = (item) => {
-    return `<div class="col-sm-8 mx-auto">
+    return `<div class="col-sm-6 mx-auto">
                 <div class="card">
-                    <img class="card-img-top" src="${item.imageUrl}" width="250" height="250" alt="camera">
-                    <div class="card-body bgc-primary">
-                        <h3 class="card-title black">${item.name}</h3>
-                        <h4 class="card-price black"> ${formatPrice(item.price)} €</h4>
-                        <label for="choice">Choisissez une option</label>
-                        <select name="option_lense" id="option_lense" class="lenses">
-
-                        </select>
+                    <div class="card-body">
+                        <img class="img-appareil" src="${item.imageUrl}" width="100" height="100" alt="camera">              
+                         <h3 class="card-title title black">${item.name}</h3>
+                         <h4 class="price black"> ${formatPrice(item.price)} €</h4>
+                         <label for="choice">Choisissez une option</label>
+                        <select name="option_lense" id="option_lense" class="lenses"></select>
                         <label for="quantity">Quantité</label>
                         <select id="quantity-product" name="quantity-product">
                             <option>1</option>
@@ -24,9 +22,10 @@ const createProduct = (item) => {
                             <option>10+</option>
                         </select>
 
-                        <button id="addToCart" class="btn btn-panier border-dark addPanier" type="button">Ajouter au panier</button>
+                        <button id="addToCart" class="btn btn-panier btn-dark addPanier" type="button">Ajouter au panier</button>
                     </div>
-                </div>       
+                </div>    
+                       
             </div>` ;
   
 }
@@ -98,6 +97,8 @@ function addItemToCart(item) {
         'lenses': choixLenses,
         'price': price
     };
+
+    //Ne laisser dans le locastorage que le id, quantity et lenses
    
     if (items=== null ) {
         items = [];
