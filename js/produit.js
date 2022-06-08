@@ -65,6 +65,16 @@ fetch(urlProduct)
     AddEventAddToCart(item);   
 });
 
+
+function main() {
+    let id= getId();
+    if ( id !="") {
+        let data=getData();
+    }
+}
+main();
+
+
 function razLS() {
 
     localStorage.setItem('produit', JSON.stringify([]));
@@ -91,11 +101,9 @@ function addItemToCart(item) {
     let id = item._id;
 
     let productToAdd={
-        'id': id,
-        'name': name,
-        'quantity': quantiteProduit,
-        'lenses': choixLenses,
-        'price': price
+        'id': id, // a conserver
+        'quantity': quantiteProduit,// a conserver
+        'lenses': choixLenses,// a conserver
     };
 
     //Ne laisser dans le locastorage que le id, quantity et lenses
