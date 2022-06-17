@@ -1,70 +1,89 @@
-const { response } = require("express");
+
 
 // création du produit
 const showCamera = (data) =>{
 
     if(data==null || data=="") {
-        messageForUser('Attention les donneés à afficher sont incorrectes','index.js -> createCamera');
+        messageForUser('Attention les données à afficher sont incorrectes','index.js -> showCamera');
+        return;
     }
+   
+    let figure       = document.createElement('figure');
+    figure.className = "col-sm-4";
 
-    let figure      = document.createElement('figure');
-    let lien        = document.createElement('a'); 
-    let img         = document.createElement('img'); 
-    let figureCap   = document.createElement('figurecaption');
-    let div         = document.createElement('div');
-    let h3          = document.createElement('h3');
+    let lien               = document.createElement('a');
+    lien.className         = "info";
+    lien.setAttribute("href", "produit.html?id=" +data._id);
+
+    let img          = document.createElement('img');
+    img.className    = "img-appareil";
+    img.style.width  = "150";
+    img.style.height = "150";
+    img.setAttribute("src", data.imageUrl);
+    
+    let figureCap       = document.createElement('figurecaption');
+    figureCap.className = "vignette";
+    
+    let div       = document.createElement('div');
+    div.className = "info";
+      
+    let h3         = document.createElement('h3');
+    h3.className   = "title black";
+    h3.textContent = data.name;
+
+    
     let h4          = document.createElement('h4');
+    h4.className    = "price black";
+    h4.textContent  = formatPrice(data.price);
+
     let btn         = document.createElement('button');
+    btn.className   = "btn btn-dark text";
+    btn.textContent = "Voir le produit";
 
-    document.querySelector('figure').className       = "col-sm-4";
-    document.querySelector('lien').attributes        = "produit.html?id=${data._id}";
-    document.querySelector('img').className          = "img-appareil";
-    document.querySelector('img').attributes         = "${data.imageUrl}";
-    document.querySelector('img').width              = "150";
-    document.querySelector('img').height             = "150";
-    document.querySelector('img').alt                = "camera";
-    document.querySelector('figureCap').className    = "vignette";
-    document.querySelector('lien').className         = "info";
-    document.querySelector('h3').className           = "title", "black";
-    document.querySelector('h3').value               = "${data.name}";
-    document.querySelector('h4').value               = "${formatPrice(data.price)}";
-    document.querySelector('h4').className           = "price", "black";
-    document.querySelector('btn').className          = "btn", "btn-dark", "text";
-    document.querySelector('btn').textContent        = "Voir le produit";
+    div.appendChild(h3);
+    div.appendChild(h4)
+    div.appendChild(btn);
+    figureCap.appendChild(div);
+    lien.appendChild(img);
+    lien.appendChild(figureCap);
+    figure.appendChild(lien);
 
-    document.body.append(figure);
-    document.body.appendChild(lien);
-    document.body.appendChild(img);
-    document.body.appendChild(figureCap);
-    document.body.appendChild(div);
-    document.body.appendChild(h3);
-    document.body.appendChild(h4);
-    document.body.appendChild(btn);
+    return figure;
     
 }
 
+// affichage des données
 function showDatas(datas) {
-    for (let datas of response) {
-        
-        let camera = showCamera(value);
-        //return datas;
 
-        document.querySelector(".card-camera").innerHTML += camera;   
-    }   
+    //TODO tester datas
+
+
+    let camera;
+    for (let data of datas) {
+       
+        camera = showCamera(data);
+
+        document.querySelector(".card-camera").appendChild( camera);   
+    } 
 }
 
 //récupération des produits à partir de l'API
-function getData() {
-    fetch(URL_API)
+function getData(url) {
+
+     //TODO tester URL
+      //TODO afficher un message si le backend est indisponible
+
+    fetch(url)
     .then(response => response.json())
     .then(response => {
-            return response;
+           showDatas(response);
         }); 
 }
 
+// affichage des données récupérées
 function main() {
-    let datas = getData();   
-    showDatas(datas);
+    let url = URL_API;   
+    getData(url);
 }
 main();
 

@@ -1,32 +1,90 @@
 // affichage du produit
 const createProduct = (item) => {
-    return `<div class="col-sm-6 mx-auto">
-                <div class="card">
-                    <div class="card-body">
-                        <img class="img-appareil" src="${item.imageUrl}" width="100" height="100" alt="camera">              
-                         <h3 class="card-title title black">${item.name}</h3>
-                         <h4 class="price black"> ${formatPrice(item.price)} €</h4>
-                         <label for="choice">Choisissez une option</label>
-                        <select name="option_lense" id="option_lense" class="lenses"></select>
-                        <label for="quantity">Quantité</label>
-                        <select id="quantity-product" name="quantity-product">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10+</option>
-                        </select>
+    if(item==null || item=="") {
+        messageForUser('Attention les données à afficher sont incorrectes','produit.js -> createProduct');
+    }
 
-                        <button id="addToCart" class="btn btn-panier btn-dark addPanier" type="button">Ajouter au panier</button>
-                    </div>
-                </div>    
-                       
-            </div>` ;
+    let divUn       = document.createElement('div');
+    divUn.className = "col-sm-6 mx-auto";
+
+    let divDeux       = document.createElement('div');
+    divDeux.className = "card";
+
+    let divTrois       = document.createElement('div');
+    divTrois.className = "card-body";
+
+    let img          = document.createElement('img');
+    img.style.width  = "100";
+    img.style.height = "100";
+    img.className    = "img-appareil";
+    img.setAttribute("src", "${item.imageUrl}");
+    img.setAttribute("alt", "camera");
+
+    let h3       = document.createElement('h3');
+    h3.className = "card-title title black";
+    h3.value     = "${item.name}";
+
+    let h4       = document.createElement('h4');
+    h4.className = "price black";
+    h4.value     = "${formatPrice(item.price)}";
+
+    let labelOption         = document.createElement('label');
+    labelOption.textContent = "Choisissez une option";
+    labelOption.setAttribute("for", "choice");
+
+    let selectOption       = document.createElement('select');
+    selectOption.className = "lenses";
+    selectOption.setAttribute("name", "option_lense");
+    selectOption.setAttribute("id", "option_lense");
+    
+    let labelQuantite         = document.createElement('label');
+    labelQuantite.textContent = "Quantité";
+    labelQuantite.setAttribute("for", "quantity");
+
+    let selectQuantite = document.createElement('select');
+    selectQuantite.setAttribute("name", "quantity-product");
+    selectQuantite.setAttribute("id", "quantity-product");
+
+    let btn         = document.createElement('button');
+    btn.textContent = "Ajouter au panier";
+    btn.className   = "btn btn-dark text";
+
+    let optionUn         = document.createElement('option');
+    optionUn.textContent = "1";
+
+    let optionDeux         = document.createElement('option');
+    optionDeux.textContent = "2";
+
+    let optionTrois         = document.createElement('option');
+    optionTrois.textContent = "3";
+
+    let optionQuatre         = document.createElement('option');
+    optionQuatre.textContent = "4";
+
+    let optionCinq         = document.createElement('option');
+    optionCinq.textContent = "5";
+
+    let optionSix         = document.createElement('option');
+    optionSix.textContent = "6";
+
+    let optionSept         = document.createElement('option');
+    optionSept.textContent = "7";
+
+    let optionHuit         = document.createElement('option');
+    optionHuit.textContent = "8";
+
+    let optionNeuf         = document.createElement('option');
+    optionNeuf.textContent = "9";
+
+    let optionDix         = document.createElement('option');
+    optionDix.textContent = "10+";
+
+    selectQuantite.appendChild(optionUn, optionDeux, optionTrois, optionQuatre, optionCinq, optionSix, optionSept, optionHuit, optionNeuf, optionDix);
+    divTrois.appendChild(img, h3, h4, labelOption, selectOption, labelQuantite, selectQuantite, btn);
+    divDeux.appendChild(divTrois);
+    divUn.appendChild(divDeux);
+
+    return divUn;
   
 }
 
@@ -47,6 +105,9 @@ function addOption(item) {
     }
 }
 
+function getId() {
+    
+}
 
 //récupérer l'ID du produit
 let params = new URLSearchParams(window.location.search);
@@ -69,7 +130,7 @@ fetch(urlProduct)
 function main() {
     let id= getId();
     if ( id !="") {
-        let data=getData();
+        let data =getData();
     }
 }
 main();
@@ -145,6 +206,7 @@ function addItemToCart(item) {
       
 }
 
+// fenetre de confirmation qui redirige
 function fenetreConfirmation() {
     if(window.confirm(`Votre article a bien été ajouté au panier ! Appuyez sur OK pour consulter le panier ou sur ANNULER pour revenir à la page d'accueil`)) {
             window.location.href ="panier.html";
