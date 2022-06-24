@@ -6,6 +6,9 @@
   background: linear-gradient(to right, #d46a29, #ae6ca6, #925df5);
 }
 
+.px-auto {
+  padding-right : 1em;
+}
 footer {
   bottom: 0;
   left: 0;

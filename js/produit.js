@@ -1,4 +1,4 @@
-// affichage du produit
+// création du produit
 const createProduct = (item) => {
     if(item==null || item=="") {
         messageForUser('Attention les données à afficher sont incorrectes','produit.js -> createProduct');
@@ -17,121 +17,125 @@ const createProduct = (item) => {
     img.style.width  = "100";
     img.style.height = "100";
     img.className    = "img-appareil";
-    img.setAttribute("src", "${item.imageUrl}");
+    img.setAttribute("src", item.imageUrl);
     img.setAttribute("alt", "camera");
 
     let h3       = document.createElement('h3');
     h3.className = "card-title title black";
-    h3.value     = "${item.name}";
+    h3.textContent     = item.name;
 
     let h4       = document.createElement('h4');
     h4.className = "price black";
-    h4.value     = "${formatPrice(item.price)}";
+    h4.textContent  = formatPrice(item.price) + " €";
+
+    let description = document.createElement('p');
+    description.className   = "description black";
+    description.textContent = item.description;
 
     let labelOption         = document.createElement('label');
     labelOption.textContent = "Choisissez une option";
     labelOption.setAttribute("for", "choice");
 
     let selectOption       = document.createElement('select');
-    selectOption.className = "lenses";
+    selectOption.className = "px-auto";
+    selectOption.value     = item.lenses;
     selectOption.setAttribute("name", "option_lense");
     selectOption.setAttribute("id", "option_lense");
+
+    let option = document.createElement('option');
+    option.className = "lenses";
     
     let labelQuantite         = document.createElement('label');
     labelQuantite.textContent = "Quantité";
     labelQuantite.setAttribute("for", "quantity");
 
     let selectQuantite = document.createElement('select');
+    selectQuantite.className = "px-auto";
     selectQuantite.setAttribute("name", "quantity-product");
     selectQuantite.setAttribute("id", "quantity-product");
 
     let btn         = document.createElement('button');
     btn.textContent = "Ajouter au panier";
-    btn.className   = "btn btn-dark text";
+    btn.className   = "px-auto btn btn-panier btn-dark addPanier text"; 
+    btn.setAttribute("id", "addToCart");
 
-    let optionUn         = document.createElement('option');
-    optionUn.textContent = "1";
+    let quantity  = document.createElement('option');
 
-    let optionDeux         = document.createElement('option');
-    optionDeux.textContent = "2";
+    for (let i = 1; i < 11; i++) {  
+      quantity.innerHTML += i + '\n';
+    // quantity.textContent += i + '\n';
+      console.log("Ligne :" + i)
+    }
 
-    let optionTrois         = document.createElement('option');
-    optionTrois.textContent = "3";
-
-    let optionQuatre         = document.createElement('option');
-    optionQuatre.textContent = "4";
-
-    let optionCinq         = document.createElement('option');
-    optionCinq.textContent = "5";
-
-    let optionSix         = document.createElement('option');
-    optionSix.textContent = "6";
-
-    let optionSept         = document.createElement('option');
-    optionSept.textContent = "7";
-
-    let optionHuit         = document.createElement('option');
-    optionHuit.textContent = "8";
-
-    let optionNeuf         = document.createElement('option');
-    optionNeuf.textContent = "9";
-
-    let optionDix         = document.createElement('option');
-    optionDix.textContent = "10+";
-
-    selectQuantite.appendChild(optionUn, optionDeux, optionTrois, optionQuatre, optionCinq, optionSix, optionSept, optionHuit, optionNeuf, optionDix);
-    divTrois.appendChild(img, h3, h4, labelOption, selectOption, labelQuantite, selectQuantite, btn);
-    divDeux.appendChild(divTrois);
     divUn.appendChild(divDeux);
+    divDeux.appendChild(divTrois);
+    divTrois.appendChild(h3);
+    divTrois.appendChild(img);
+    divTrois.appendChild(h4);
+    divTrois.appendChild(description);
+    divTrois.appendChild(labelOption);
+    divTrois.appendChild(selectOption);
+    divTrois.appendChild(labelQuantite);
+    divTrois.appendChild(selectQuantite);
+    divTrois.appendChild(btn);
+    selectQuantite.appendChild(quantity);
+    selectOption.appendChild(option);
 
     return divUn;
   
 }
 
-
+// affichage du produit
 function showProduct(camera) {
-    document.querySelector(".card-produit").innerHTML += camera;
+    document.querySelector(".card-produit").appendChild(camera);
 }
 
+// ajout du produit au clic
+// function AddEventAddToCart(item) {
+//     document.getElementById("addToCart").addEventListener("click",function() { addItemToCart(item);},false);
+// }
 
-function AddEventAddToCart(item) {
-    document.getElementById("addToCart").addEventListener("click",function() { addItemToCart(item);},false);
-}
-
-
+//affichage des options
 function addOption(item) {
     for(let lense of item.lenses) {
         document.querySelector(".lenses").innerHTML += `<option>${lense}</option>`;
     }
 }
 
+//récupérer l'ID du produit
 function getId() {
-    
+    let params = new URLSearchParams(window.location.search);
+
+    return params.get('id');
 }
 
-//récupérer l'ID du produit
-let params = new URLSearchParams(window.location.search);
 
-let idProduct = params.get('id');
+function getData(urlProduct) {
 
-let urlProduct = URL_API + '/' + idProduct;
+    if(urlProduct==null || urlProduct=="") {
+        messageForUser('Un problème est survenu au niveau du backend','produit.js -> getData');
+        return;
+    }
+        
+    fetch(urlProduct)
+    .then(response => response.json())
+    .then(item => {
 
-fetch(urlProduct)
-.then(response => response.json())
-.then(item => {
-
-    let camera = createProduct(item);
-    showProduct(camera);
-    addOption(item)
-    AddEventAddToCart(item);   
-});
-
+        let camera = createProduct(item);
+        showProduct(camera);
+        addOption(item)
+        // AddEventAddToCart(item);   
+    }); 
+}
+ 
 
 function main() {
-    let id= getId();
-    if ( id !="") {
-        let data =getData();
-    }
+    let id = getId();
+
+    let urlProduct = URL_API + '/' + id;
+
+    getData(urlProduct);
+
 }
 main();
 
@@ -142,16 +146,17 @@ function razLS() {
     console.log('RAZ localstorage');
 }
 
+
+
 function addItemToCart(item) {
-    
-   //récupération de l'option
-   let selectLenses = document.querySelector("#option_lense");
+    //récupération de l'endroit d'affichage de l'option
+let selectLenses = document.querySelector("#option_lense");
 
-   let choixLenses = selectLenses.value; 
+// valeur de l'option
+let choixLenses = selectLenses.value; 
 
-   //récupération de la quantité
-   let quantiteProduit = parseInt( document.querySelector("#quantity-product").value); 
-
+//récupération du lieu d'affichage de la quantité
+let quantiteProduit = parseInt(document.querySelector("#quantity-product").value); 
     //traitement du local storage
 
     let items = JSON.parse(localStorage.getItem('produit')) ;
@@ -166,13 +171,11 @@ function addItemToCart(item) {
         'quantity': quantiteProduit,// a conserver
         'lenses': choixLenses,// a conserver
     };
-
-    //Ne laisser dans le locastorage que le id, quantity et lenses
    
     if (items=== null ) {
         items = [];
     }
-    // Si le local storage contient le produit avec l'option ->modification de la quantité
+    // Si le local storage contient le produit avec l'option -> modification de la quantité
     if (items.length==0) {
         console.log('ajout panier');   
         items.push(productToAdd);
@@ -186,7 +189,7 @@ function addItemToCart(item) {
             
             if (itemInLS.name===name && itemInLS.lenses===choixLenses) {
                 console.log('trouvé !');
-                itemInLS.quantity +=   quantiteProduit;
+                itemInLS.quantity += quantiteProduit;
                 present= true;   
             }
             console.log(itemInLS);
