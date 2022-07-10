@@ -3,7 +3,7 @@ const showCamera = (data) =>{
 
     if(data==null || data=="") {
         messageForUser('Attention les données à afficher sont incorrectes','index.js -> showCamera');
-        return;
+        return false;
     }
    
     let figure       = document.createElement('figure');
@@ -59,7 +59,7 @@ function showDatas(datas) {
 
     if(datas==null || datas=="") {
         messageForUser('Attention les données à afficher sont incorrectes','index.js -> showDatas');
-        return;
+        return false;
     }
 
     let camera;
@@ -74,11 +74,9 @@ function showDatas(datas) {
 //récupération des produits à partir de l'API
 function getData(url) {
 
-    //TODO tester URL
-    //TODO afficher un message si le backend est indisponible
     if(url==null || url=="") {
         messageForUser('Un problème est survenu au niveau du backend','index.js -> getData');
-        return;
+        return false;
     }
 
     fetch(url)
@@ -92,6 +90,9 @@ function getData(url) {
 function main() {
     let url = URL_API;   
     getData(url);
+    if (url==false) {
+        return;
+    }
 }
 main();
 
