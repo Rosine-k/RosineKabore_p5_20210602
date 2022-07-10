@@ -75,17 +75,17 @@
                         <div class="card card-panier ">
                             <div class="card-body">
                                 <div class="img-panier">
-                                    <img src="${produit.imageUrl}" width="150" height="150" alt="image panier">
+                                    <img src="" width="150" height="150" alt="image panier">
                                 </div>
                                 <div class="info-panier flex-column-around">
-                                    <h3 class="black card-title">${produit.name}</h3>
-                                    <p class="option-panier">${produit.lenses}</p>
-                                    <p class="prix">${formatPrice(produit.price*basket.quantity)} €</p>
+                                    <h3 class="black card-title">Nom</h3>
+                                    <p class="option-panier">Option</p>
+                                    <p class="prix">0 €</p>
                                 </div>
                                 <div class="quantite-change flex-around">
                                     <div class="flex-centre">
                                         <button class="btn-moins">-</button>
-                                        <span class="quantity-panier">${produit.quantity}</span>
+                                        <span class="quantity-panier">1</span>
                                         <button class="btn-plus">+</button>
                                     </div>
                                    
@@ -110,7 +110,7 @@
 
                 <div class="row justify-content-md-center">
                     
-                    <div class="col-sm-9 ">
+                    <div class="col-sm-9 formulaire">
 
                         <h2>Vos coordonnées</h2>
 
@@ -118,21 +118,27 @@
                         <form id="form" class="needs-validation">
 
                             <div class=”form-group”>
-                                <label for="firstName">Nom</label>
+                                <label for="lastName">Nom</label>
                                 <input type="text" name="lastName" class="form-control" placeholder="Votre nom"
-                                    id="lastName" required>
+                                    id="lastName" minlength="2" required>
                             </div>
 
                             <div class=”form-group”>
-                                <label for="lastName">Prénom</label>
+                                <label for="firstName">Prénom</label>
                                 <input type="text" name="firstName" class="form-control" placeholder="Votre Prénom"
-                                    id="firstName" required>
+                                    id="firstName" minlength="2" required>
                             </div>
 
                             <div class=”form-group”>
                                 <label for="address">Adresse</label>
                                 <input type="text" name="address" class="form-control" placeholder="Votre adresse"
-                                    id="address" required>
+                                    id="address" minlength="8" required>
+                            </div>
+
+                            <div class=”form-group”>
+                                <label for="codePostal">Code Postal</label>
+                                <input type="number" name="zip" class="form-control" placeholder="Votre code postal"
+                                    id="zip" minlength="5" required>
                             </div>
 
                             <div class=”form-group”>
@@ -147,7 +153,7 @@
                                     id="email" required>
                             </div>
 
-                            <button class=" btn btn-validation border-dark bloc-button" type="submit">
+                            <button class=" btn btn-dark btn-validation border-dark bloc-button" type="submit">
                                 Valider votre commande
                             </button>
 

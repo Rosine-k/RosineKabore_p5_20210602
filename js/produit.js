@@ -2,6 +2,7 @@
 const createProduct = (item) => {
     if(item==null || item=="") {
         messageForUser('Attention les données à afficher sont incorrectes','produit.js -> createProduct');
+        return false;
     }
 
     let divUn       = document.createElement('div');
@@ -37,20 +38,16 @@ const createProduct = (item) => {
     labelOption.setAttribute("for", "choice");
 
     let selectOption       = document.createElement('select');
-    selectOption.className = "px-auto";
-    selectOption.value     = item.lenses;
+    selectOption.className = "px-auto lenses";
     selectOption.setAttribute("name", "option_lense");
     selectOption.setAttribute("id", "option_lense");
-
-    let option = document.createElement('option');
-    option.className = "lenses";
     
     let labelQuantite         = document.createElement('label');
     labelQuantite.textContent = "Quantité";
     labelQuantite.setAttribute("for", "quantity");
 
     let selectQuantite = document.createElement('select');
-    selectQuantite.className = "px-auto";
+    selectQuantite.className = "px-auto quantity";
     selectQuantite.setAttribute("name", "quantity-product");
     selectQuantite.setAttribute("id", "quantity-product");
 
@@ -59,14 +56,13 @@ const createProduct = (item) => {
     btn.className   = "px-auto btn btn-panier btn-dark addPanier text"; 
     btn.setAttribute("id", "addToCart");
 
-    let quantity  = document.createElement('option');
+    let quantity  ='';
 
     for (let i = 1; i < 11; i++) {  
-      quantity.innerHTML += i + '\n';
-    // quantity.textContent += i + '\n';
-      console.log("Ligne :" + i)
+      quantity+="<option>"+ i + "</option>";
     }
-
+    selectQuantite.innerHTML =quantity;
+    
     divUn.appendChild(divDeux);
     divDeux.appendChild(divTrois);
     divTrois.appendChild(h3);
@@ -78,43 +74,66 @@ const createProduct = (item) => {
     divTrois.appendChild(labelQuantite);
     divTrois.appendChild(selectQuantite);
     divTrois.appendChild(btn);
-    selectQuantite.appendChild(quantity);
-    selectOption.appendChild(option);
-
-    return divUn;
-  
+    
+    return divUn;  
 }
+
 
 // affichage du produit
 function showProduct(camera) {
+    if(camera==null || camera=="") {
+        messageForUser('Attention les données ne peuvent pas être affichés','produit.js -> showProduct');
+        return false;
+    }
+
     document.querySelector(".card-produit").appendChild(camera);
 }
 
-// ajout du produit au clic
-// function AddEventAddToCart(item) {
-//     document.getElementById("addToCart").addEventListener("click",function() { addItemToCart(item);},false);
-// }
+
+//ajout du produit au clic
+function AddEventAddToCart(item) {
+    if(item==null || item=="") {
+        messageForUser("Le ou les produits n'ont pas été ajoutés",'produit.js -> AddEventAddToCart');
+        return false;
+    }
+
+    document.getElementById("addToCart").addEventListener("click",function() { addItemToCart(item);},false);
+}
+
 
 //affichage des options
 function addOption(item) {
+    if(item==null || item=="") {
+        messageForUser('Attention les options ne peuvent être affiché','produit.js -> addOption');
+        return false;
+    }
+
     for(let lense of item.lenses) {
         document.querySelector(".lenses").innerHTML += `<option>${lense}</option>`;
     }
 }
 
+
 //récupérer l'ID du produit
 function getId() {
+    
     let params = new URLSearchParams(window.location.search);
+
+    if(params==null || params=="") {
+        messageForUser("L'id n'a pas été récupéré",'produit.js -> getId');
+        return false;
+     }
 
     return params.get('id');
 }
 
 
+// récupération des données
 function getData(urlProduct) {
 
     if(urlProduct==null || urlProduct=="") {
         messageForUser('Un problème est survenu au niveau du backend','produit.js -> getData');
-        return;
+        return false;
     }
         
     fetch(urlProduct)
@@ -124,13 +143,18 @@ function getData(urlProduct) {
         let camera = createProduct(item);
         showProduct(camera);
         addOption(item)
-        // AddEventAddToCart(item);   
+        AddEventAddToCart(item);   
     }); 
 }
  
 
+// affichage des données
 function main() {
     let id = getId();
+    
+    if (id==false) {
+        return;
+    }
 
     let urlProduct = URL_API + '/' + id;
 
@@ -147,30 +171,43 @@ function razLS() {
 }
 
 
+function makeProductoAdd() {
+
+   //si probleme rencontré
+
+    //récupération de l'endroit d'affichage de l'option
+    let selectLenses = document.querySelector("#option_lense");
+
+   // valeur de l'option
+   let choixLenses = selectLenses.value; 
+
+   //récupération de la quantité
+   let quantiteProduit = parseInt(document.querySelector("#quantity-product").value);
+
+   return {
+        'id': id, 
+        'quantity': quantiteProduit,
+        'lenses': choixLenses,
+    };
+}
+
 
 function addItemToCart(item) {
-    //récupération de l'endroit d'affichage de l'option
-let selectLenses = document.querySelector("#option_lense");
+     
+    if(item==null || item=="") {
+        messageForUser('Attention les données à afficher sont incorrectes','produit.js -> addItemToCart');
+        return false;
+    }
 
-// valeur de l'option
-let choixLenses = selectLenses.value; 
+    let productToAdd = makeProductoAdd();
 
-//récupération du lieu d'affichage de la quantité
-let quantiteProduit = parseInt(document.querySelector("#quantity-product").value); 
     //traitement du local storage
 
     let items = JSON.parse(localStorage.getItem('produit')) ;
    
     let present = false;
-    let name = item.name;
-    let price = item.price;
-    let id = item._id;
 
-    let productToAdd={
-        'id': id, // a conserver
-        'quantity': quantiteProduit,// a conserver
-        'lenses': choixLenses,// a conserver
-    };
+    let id = item._id;
    
     if (items=== null ) {
         items = [];
@@ -212,9 +249,9 @@ let quantiteProduit = parseInt(document.querySelector("#quantity-product").value
 // fenetre de confirmation qui redirige
 function fenetreConfirmation() {
     if(window.confirm(`Votre article a bien été ajouté au panier ! Appuyez sur OK pour consulter le panier ou sur ANNULER pour revenir à la page d'accueil`)) {
-            window.location.href ="panier.html";
-        }
-        else{
-            window.location.href ="index.html";
-        }
+        window.location.href ="panier.html";
+    }
+    else{
+        window.location.href ="index.html";
+    }
 }
