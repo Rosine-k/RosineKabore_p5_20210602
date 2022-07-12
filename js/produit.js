@@ -122,7 +122,7 @@ function getId() {
     if(params==null || params=="") {
         messageForUser("L'id n'a pas été récupéré",'produit.js -> getId');
         return false;
-     }
+    }
 
     return params.get('id');
 }
@@ -159,7 +159,6 @@ function main() {
     let urlProduct = URL_API + '/' + id;
 
     getData(urlProduct);
-
 }
 main();
 
@@ -171,10 +170,13 @@ function razLS() {
 }
 
 
-function makeProductoAdd() {
+function makeProductoAdd(item) {
 
    //si probleme rencontré
-
+   if(item==null || item=="") {
+       messageForUser("Les options n'ont pas été récupérés",'produit.js -> makeProductoAdd');
+       return false;
+    }
     //récupération de l'endroit d'affichage de l'option
     let selectLenses = document.querySelector("#option_lense");
 
@@ -183,6 +185,8 @@ function makeProductoAdd() {
 
    //récupération de la quantité
    let quantiteProduit = parseInt(document.querySelector("#quantity-product").value);
+   
+   let id = item._id;
 
    return {
         'id': id, 
@@ -194,20 +198,18 @@ function makeProductoAdd() {
 
 function addItemToCart(item) {
      
-    if(item==null || item=="") {
+    if(item == null || item == "") {
         messageForUser('Attention les données à afficher sont incorrectes','produit.js -> addItemToCart');
         return false;
     }
 
-    let productToAdd = makeProductoAdd();
+    let productToAdd = makeProductoAdd(item);
 
     //traitement du local storage
 
     let items = JSON.parse(localStorage.getItem('produit')) ;
    
     let present = false;
-
-    let id = item._id;
    
     if (items=== null ) {
         items = [];
@@ -246,12 +248,9 @@ function addItemToCart(item) {
       
 }
 
-// fenetre de confirmation qui redirige
+// fenetre de confirmation 
 function fenetreConfirmation() {
-    if(window.confirm(`Votre article a bien été ajouté au panier ! Appuyez sur OK pour consulter le panier ou sur ANNULER pour revenir à la page d'accueil`)) {
-        window.location.href ="panier.html";
-    }
-    else{
-        window.location.href ="index.html";
-    }
+
+    alert('Votre article a bien été ajouté au panier !');
+
 }
