@@ -1,10 +1,11 @@
 let productsBE;
+let produits = [];
 
 // création du panier
-const creationPanier = (products) => {
+function showOneElementOfBasket(productBE,productLS ) {
   // si problème survenu
-  if(products==null || products=="") {
-    messageForUser('Attention les données à afficher sont incorrectes','panier.js -> creationPanier');
+  if(productLS==null || productLS=="") {
+    messageForUser('Attention les données à afficher sont incorrectes','panier.js -> showOneElementOfBasket');
     return false;
   }
 
@@ -18,7 +19,7 @@ const creationPanier = (products) => {
   img.style.width  = "150";
   img.style.height = "150";
   img.className    = "img-panier";
-  img.setAttribute("src", productsBE.imageUrl);
+  img.setAttribute("src", productBE.imageUrl);
   img.setAttribute("alt", "image panier");
 
   let divTrois       = document.createElement('div');
@@ -26,15 +27,15 @@ const creationPanier = (products) => {
 
   let h3       = document.createElement('h3');
   h3.className = "black card-title";
-  h3.value     = productsBE.name;
+  h3.value     = productBE.name;
 
   let option       = document.createElement('p');
   option.className = "option-panier";
-  option.value     = products.lenses;
+  option.value     = productLS.lenses;
 
   let prix       = document.createElement('p');
   prix.className = "prix";
-  prix.value     = formatPrice(productsBE.price*products.quantity) + " €";
+  prix.value     = formatPrice(productBE.price*productLS.quantity) + " €";
 
   let divQuatre       = document.createElement('div');
   divQuatre.className = "quantite-change flex-around";
@@ -47,7 +48,7 @@ const creationPanier = (products) => {
 
   let span       = document.createElement('span');
   span.className = "quantite-panier";
-  span.value     = products.quantity;
+  span.value     = productLS.quantity;
 
   let btnPlus      = document.createElement('button');
   btnPlus.className = "btn-plus";
@@ -69,8 +70,10 @@ const creationPanier = (products) => {
 
 }
 
+
 // affichage du panier
 function affichagePanier(camera) {
+
   // si problème survenu
   if(camera==null || camera=="") {
     messageForUser('Attention les données à afficher sont incorrectes','panier.js -> affichagePanier');
@@ -78,7 +81,7 @@ function affichagePanier(camera) {
   }
 
   // si produit dans panier
-  if (produit) {
+  if (productsBE) {
     console.log('produit ajouté');
     document.querySelector(".card-panier").appendChild(camera);
     //affichage du formulaire
@@ -96,49 +99,118 @@ function affichagePanier(camera) {
   
 }
 
+// Ajout des articles
+function addProduits(creationPanier) {
+  
+  produits.push(creationPanier[i]._id);
+  
+}
+
+//affichage des options
+function addOption(productLS) {
+  if(productLS==null || productLS=="") {
+    messageForUser('Attention les options ne peuvent être affiché','produit.js -> addOption');
+    return false;
+  }
+
+  for(let lense of productLS.lenses) {
+    lense = document.querySelector(".option-panier").value;
+  }
+}
+
+
 //récupération des produits à partir de l'API
 function getData(url) {
 
   if(url==null || url=="") {
-      messageForUser('Un problème est survenu au niveau du backend','index.js -> getData');
-      return false;
+    messageForUser('Un problème est survenu au niveau du backend','index.js -> getData');
+    return false;
   }
 
   fetch(url)
   .then(response => response.json())
   .then(response => {
-         productsBE=response;
-        showDatas();
-      }); 
+    productsBE = response;
+    showDatas();
+  }); 
 }
 
+
+function showDatas() {
+
+  let productsLS = JSON.parse(localStorage.getItem('produit'));
+  console.log(productsLS);
+  for(i = 0; i < productsLS.length; i++) {
+    let productBE = getProdutFromBE( productsLS[i]['id']);
+    let productLS = productsLS[i];
+    console.log('manu');
+    console.log( productsLS[i]['id']);
+
+
+    showOneElementOfBasket(productBE,productLS );
+
+
+  }
+    // todo showPriceTotal(productsLS,productsBE)
+}
+
+function getProdutFromBE(id)
+{
+  for(i = 0; i < productsBE.length; i++) {
+    if(productsBE[i]['_id']==id ) {
+      return productsBE[i];
+    }
+  }
+}
 
 function main() {
 
   let url = URL_API;   
-  getData(url);
-
+  
   if (url==false) {
     return;
-}
-
+  }
+  getData(url);
 }
 main();
 
 
-function showDatas() {
-  // récupérer local storage
-  let productsLS = JSON.parse(localStorage.getItem('produit'));
-  for (let productLS of productsLS) {
-    let camera = creationPanier(productLS);
+//calcul du produit (boucle si nom et option pareil(= true?), calcul quantité)
+function calculPrix() {
 
-    affichagePanier(camera);
-  }
+  
 }
 
-//ajout et calcul du prix
+// ajouter quantite produit
+function ajoutQuantite() {
+  let btnAdd = document.querySelector('.btn-plus');
+
+  btnAdd.addEventListener('click', function(){
+    for(i = 0; i < productLS.length; i++) {
+      
+    }
+  })
+}
+
+//baisser quantite produit
+function baisserQuantite() {
+  let btnRemove = document.querySelector('.btn-moins');
+
+  btnRemove.addEventListener('click', function(){
+    for(i = 0; i < productLS.length; i--) {
+     
+    }
+  })
+
+}
 
 
+function calculPrixTotal() {
+
+  let totalPrice = document.querySelector('.prix-total');
+  let total = 0;
+  
+}
 
 
 // suppression du produit
@@ -148,6 +220,7 @@ function suppression() {
 
   //supprime le produit selectionné (id) 
   btnSuppression.addEventListener('click', function() {
+    localStorage.removeItem('produit');
 
   })
 }
@@ -159,11 +232,11 @@ function envoieCommande () {
 }
 
 
-// validité du formulaire 
+// validation du formulaire 
 function validNames () {
 
-  let firstname = document.getElementById('firstname').value;
-  let lastname = document.getElementById('lastname').value;
+  let firstname = document.getElementById('firstName').value;
+  let lastname = document.getElementById('lastName').value;
   let city = document.getElementById('city').value;
 
   if(firstname, lastname, city == /^[A-Za-z\s]+$/) {
@@ -200,12 +273,17 @@ function validEmail() {
 function validation () {
 
   let boutonvalidation = document.querySelector('.btn-validation');
+
+  let names = validNames();
+  let address = validAddress();
+  let email = validEmail();
+  let zip = validZip();
   
   boutonvalidation.addEventListener('click', function (e) {
 
     e.preventDefault();
 
-    if(validNames && validAddress && validEmail && validZip == true ) {
+    if(names && address && email && zip == true ) {
       envoieCommande();
     }  
     
