@@ -1,35 +1,10 @@
+/*body*/
 .bgc-primary {
   background-color: #d46a29;
 }
 
-.bgc-linear {
-  background: linear-gradient(to right, #d46a29, #ae6ca6, #925df5);
-}
-
-.px-auto {
-  padding-right : 1em;
-}
-footer {
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.footer-text {
-  margin-top: -3em;
-}
-
-ul li {
-  list-style-type: none;
-}
-
-h5 {
-  padding-top: 0.7rem;
-  margin-left: 1.5rem;
-}
-
-a:link {
-  text-decoration: none;
+.black {
+  color: black;
 }
 
 body {
@@ -37,34 +12,23 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.black {
-  color: black;
+
+/*header*/
+.header-title {
+  font-size: 18px;
 }
 
-img {
-  object-fit: contain;
-}
 
-a:link {
-  text-decoration: none;
-}
-
+/* main */
 .fas,
 .fab {
-  color: #cc7f4f;
+  color: #abc8f8;
   width: 2em;
   height: 2em;
 }
 
 .basket {
   font-weight: 500;
-}
-
-@media only screen and (min-width: 250px) and (max-width: 450px) {
-  .logo {
-    height: 3em;
-    width: 3em;
-  }
 }
 
 .img-appareil {
@@ -78,8 +42,13 @@ a:link {
 }
 
 .heading_title2 {
-  margin: 0.5em;
+  margin: 1em;
   font-weight: lighter;
+  font-size: 25px;
+}
+
+.bgc-linear {
+  background: linear-gradient(to top, #abc8f8, #dabfe5, #f2c5dd);
 }
 
 figure {
@@ -133,4 +102,46 @@ th {
 
 #panier-title {
   display: flex;
+}
+
+.px-auto {
+  padding-right : 1em;
+}
+
+h5 {
+  padding-top: 0.7rem;
+  margin-left: 1.5rem;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+img {
+  object-fit: contain;
+}
+
+
+/*footer*/
+footer {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.footer-text {
+  margin-top: -3em;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+
+/*media queries*/
+@media only screen and (min-width: 250px) and (max-width: 450px) {
+  .logo {
+    height: 3em;
+    width: 3em;
+  }
 }

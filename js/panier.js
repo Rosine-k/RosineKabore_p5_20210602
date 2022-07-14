@@ -154,14 +154,14 @@ function showDatas() {
     // todo showPriceTotal(productsLS,productsBE)
 }
 
-function getProdutFromBE(id)
-{
-  for(i = 0; i < productsBE.length; i++) {
-    if(productsBE[i]['_id']==id ) {
-      return productsBE[i];
-    }
-  }
-}
+// function getProdutFromBE(id)
+// {
+//   for(i = 0; i < productsBE.length; i++) {
+//     if(productsBE[i]['_id']==id ) {
+//       return productsBE[i];
+//     }
+//   }
+// }
 
 function main() {
 
