@@ -5,9 +5,15 @@ const showCamera = (data) =>{
         messageForUser('Attention les données à afficher sont incorrectes','index.js -> showCamera');
         return false;
     }
-   
-    let figure       = document.createElement('figure');
-    figure.className = "col-sm-4";
+    
+    let divUn       = document.createElement('div');
+    divUn.className = "col-sm-4";
+
+    let divDeux       = document.createElement('div');
+    divDeux.className = "card";
+
+    let divTrois       = document.createElement('div');
+    divTrois.className = "card-body";
 
     let lien               = document.createElement('a');
     lien.className         = "info";
@@ -18,19 +24,13 @@ const showCamera = (data) =>{
     img.style.width  = "150";
     img.style.height = "150";
     img.setAttribute("src", data.imageUrl);
-    
-    let figureCap       = document.createElement('figurecaption');
-    figureCap.className = "vignette";
-    
-    let div       = document.createElement('div');
-    div.className = "info";
-      
+        
     let h3         = document.createElement('h3');
-    h3.className   = "title black";
+    h3.className   = "card-title title black";
     h3.textContent = data.name;
 
     let description = document.createElement('p');
-    description.className   = "description black";
+    description.className   = " card-text description black";
     description.textContent = data.description;
 
     let h4          = document.createElement('h4');
@@ -41,16 +41,16 @@ const showCamera = (data) =>{
     btn.className   = "btn btn-dark text";
     btn.textContent = "Voir le produit";
 
-    div.appendChild(description);
-    div.appendChild(h3);
-    div.appendChild(h4);
-    div.appendChild(btn);
-    figureCap.appendChild(div);
+    divUn.appendChild(divDeux);
+    divDeux.appendChild(divTrois);
+    divTrois.appendChild(lien);
     lien.appendChild(img);
-    lien.appendChild(figureCap);
-    figure.appendChild(lien);
-
-    return figure;
+    lien.appendChild(h3);
+    lien.appendChild(description);
+    lien.appendChild(h4);
+    lien.appendChild(btn);
+   
+    return divUn;
     
 }
 
