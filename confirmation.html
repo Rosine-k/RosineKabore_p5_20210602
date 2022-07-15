@@ -14,24 +14,24 @@
 
         <header>
 
-            <div class="bloc d-block w-100 bgc-primary" id="header">
+            <div class="bloc d-block w-100" id="header">
 
                 <div class="container text-center">
 
                     <nav class="navbar row navbar-expand">
 
                         <a class="navbar-brand col-4" href="index.html">
-                            <img src="./images/logo.png" width="150" height="150" class="logo" alt="logo"/>
+                            <img src="./images/logo.png" width="100" height="100" class="logo" alt="logo"/>
                         </a>
 
                         <div class="col-4">
-                            <a href="index.html" class="black">Accueil</a>
+                            <a href="index.html" class="black header-title">Accueil</a>
                         </div>
 
                         <div class="col-4 basket">
 
-                            <a href="panier.html" class="black">Panier
-                            <i class="fas fa-shopping-basket"></i>
+                            <a href="panier.html" class="black header-title">Panier
+                                <i class="fas fa-shopping-basket"></i>
                             </a>
 
                         </div>
@@ -45,7 +45,7 @@
         </header>
 
 
-        <main>
+        <main class="bgc-linear">
 
             <div class="bloc d-block w-100 bgc-primary" id="confirmation">
                 <div class="container bloc-lg text-center">
@@ -53,6 +53,16 @@
                         <div class="col-sm-12">
                             <h1>Confirmation de votre commande</h1>
                             <h2>Récapitulatif :</h2>
+                            <div class="col-sm-8 mx-auto">
+                                <div class="card">
+                                    <div class="card-body bgc-white">
+                                      <h3 class="card-title black font-weight-bold order-id"></h3>
+                                      <h4 class="card-text black total-price"></h4>
+                                      <h4 class="card-text black text-pseudo"></h4>  
+                                      <h4 class="card-text black font-weight-bold">A bientôt !</h4>                                             
+                                    </div>
+                                </div>       
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,31 +81,43 @@
 
         <footer>
 
-            <div class="bloc d-block w-100 text-center bgc-primary" id="footer">
+            <div class="bloc d-block w-100 text-center" id="footer">
                 <div class="container bloc-sm">
                     <div class="row">
-                        <div class="col">
-                            <h5 class="font-weight-bold text-center">Orinoco</h5>
-
-                            <ul class="font-weight-normal text-center">
-                                <li><a href="#" class="black">Nous connaître</a></li>
-                                <li><a href="#" class="black">Contact</a></li>
-                                <li><a href="#" class="black">Conditions générales de vente</a></li>
-                                <li><a href="#" class="black">Vos informations personnelles</a></li>
-                            </ul>
-
+                        <div class="col-sm-12">
+                            <section class="flex-column-centre">
+                                <div class="flex-centre">
+                                    <h5 class="font-weight-bold">Orinoco</h5>
+                                </div>
+                                <div class="flex-around reseau-logo">
+                                    <a href="#"><i class="fab fa-facebook-square fa-4x"></i></a>
+                                    <a href="#"><i class="fab fa-instagram-square fa-4x"></i></a>
+                                    <a href="#"><i class="fab fa-pinterest-square fa-4x"></i></a>
+                                </div>                           
+                            </section>
+                            <section>
+                                <div class="footer-text">
+                                    <ul class="font-weight-normal text-center">
+                                       <li><a href="#" class="black">Nous connaître</a></li>
+                                       <li><a href="#" class="black">Contact</a></li>
+                                       <li><a href="#" class="black">Conditions générales de vente</a></li>
+                                       <li><a href="#" class="black">Vos informations personnelles</a></li>
+                                    </ul>  
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>
-
+    
             </div>
-
+    
         </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="js/confirmation.js"></script>  
+        <script src="js/confirmation.js"></script>
+        <script src="js/functions.js"></script>  
 
     </body>
 

@@ -1,80 +1,143 @@
+/*body*/
 .bgc-primary {
-    background-color: #f3e9f1;
+  background-color: #d46a29;
+}
+
+.black {
+  color: black;
+}
+
+body {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/*header*/
+.header-title {
+  font-size: 18px;
+}
+
+
+/* main */
+.fas,
+.fab {
+  color: #abc8f8;
+  width: 2em;
+  height: 2em;
+}
+
+.basket {
+  font-weight: 500;
+}
+
+.img-appareil {
+  width: 100%;
+  height: 17vw;
+
+}
+
+.heading_title1 {
+  margin-top: 1em;
+}
+
+.heading_title2 {
+  margin: 1em;
+  font-weight: lighter;
+  font-size: 25px;
+}
+
+.bgc-linear {
+  background: linear-gradient(to top, #abc8f8, #dabfe5, #f2c5dd);
+}
+
+.title {
+  padding-top: 1em;
+}
+
+.price,
+.font-weight-bold {
+  font-weight: bolder;
+}
+
+.lenses {
+  margin: 2em;
+}
+
+.btn:hover {
+  box-shadow: 3px 2px 6px #925df5;
+  transition: transform 200ms;
+}
+
+.form-control {
+  margin-bottom: 1rem;
+}
+
+.btn-validation {
+  margin: 1rem;
+}
+
+.card {
+  margin-bottom: 2.5em;
+}
+
+table {
+  border-collapse: collapse;
+  width: 400px;
+  padding: 10px;
+  border: black solid 1px;
+  text-align: center;
+}
+
+td,
+th {
+  border: 1px solid black;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+#panier-title {
+  display: flex;
+}
+
+.px-auto {
+  padding-right : 1em;
+}
+
+h5 {
+  padding-top: 0.7rem;
+  margin-left: 1.5rem;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+img {
+  object-fit: contain;
+}
+
+
+/*footer*/
+footer {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.footer-text {
+  margin-top: -3em;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+
+/*media queries*/
+@media only screen and (min-width: 250px) and (max-width: 450px) {
+  .logo {
+    height: 3em;
+    width: 3em;
   }
-  
-  footer {
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  ul li {
-    list-style-type: none;
-  }
-  
-  h5 {
-    padding-top: 0.7rem;
-    margin-left: 1.5rem;
-  }
-  
-  a:link {
-    text-decoration: none;
-  }
-  
-  body {
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
-  .black {
-    color: black;
-  }
-  
-  img {
-    object-fit: contain;
-  }
-  
-  a:link {
-    text-decoration: none;
-  }
-  
-  .fas {
-    color: #965fe9;
-    width: 2em;
-    height: 2em;
-  }
-  
-  .basket {
-    font-weight: 500;
-  }
-  
-  @media only screen and (min-width: 250px) and (max-width: 450px) {
-    .logo {
-      height: 3em;
-      width: 3em;
-    }
-  }
-  
-  .card-img-top {
-    width: 100%;
-    height: 17vw;
-    object-fit: cover;
-  }
-  
-  .heading_title1 {
-    margin-top: 1em;
-  }
-  
-  .heading_title2 {
-    margin-bottom: 1.5em;
-  }
-  
-  .card {
-    margin-bottom: 1.5em;
-  }
-  
-  .card-price, .font-weight-bold {
-    font-weight: bolder;
-  }
-  
-  
+}

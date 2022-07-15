@@ -14,24 +14,24 @@
 
         <header>
 
-            <div class="bloc d-block w-100 bgc-primary" id="header">
+            <div class="bloc d-block w-100" id="header">
 
                 <div class="container text-center">
 
                     <nav class="navbar row navbar-expand">
 
                         <a class="navbar-brand col-4" href="index.html">
-                            <img src="./images/logo.png" width="150" height="150" class="logo" alt="logo"/>
+                            <img src="./images/logo.png" width="100" height="100" class="logo" alt="logo"/>
                         </a>
 
                         <div class="col-4">
-                            <a href="index.html" class="black">Accueil</a>
+                            <a href="index.html" class="black header-title">Accueil</a>
                         </div>
 
 
                         <div class="col-4 basket">
 
-                            <a href="panier.html" class="black">Panier
+                            <a href="panier.html" class="black header-title">Panier
                             <i class="fas fa-shopping-basket"></i>
                             </a>
 
@@ -47,13 +47,13 @@
         </header>
 
 
-        <main>
+        <main class="bgc-linear">
             <button onclick='razLS();' ></button>
             <div class="bloc d-block w-100" id="articles">
                 <div class="container bloc-lg text-center">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h1>Le produit sélectionné</h1>
+                            <h1 class="heading_title2">Le produit sélectionné</h1>
                         </div>
                     </div>
                 </div>
@@ -73,25 +73,36 @@
 
         <footer>
 
-            <div class="bloc d-block w-100 text-center bgc-primary" id="footer">
+            <div class="bloc d-block w-100 text-center" id="footer">
                 <div class="container bloc-sm">
                     <div class="row">
-                        <div class="col">
-                            <h5 class="font-weight-bold text-center">Orinoco</h5>
-
-                            <ul class="font-weight-normal text-center">
-                                <li><a href="#" class="black">Nous connaître</a></li>
-                                <li><a href="#" class="black">Contact</a></li>
-                                <li><a href="#" class="black">Conditions générales de vente</a></li>
-                                <li><a href="#" class="black">Vos informations personnelles</a></li>
-                            </ul>
-
+                        <div class="col-sm-12">
+                            <section class="flex-column-centre">
+                                <div class="flex-centre">
+                                    <h5 class="font-weight-bold">Orinoco</h5>
+                                </div>
+                                <div class="flex-around reseau-logo">
+                                    <a href="#"><i class="fab fa-facebook-square fa-4x"></i></a>
+                                    <a href="#"><i class="fab fa-instagram-square fa-4x"></i></a>
+                                    <a href="#"><i class="fab fa-pinterest-square fa-4x"></i></a>
+                                </div>                           
+                            </section>
+                            <section>
+                                <div class="footer-text">
+                                    <ul class="font-weight-normal text-center">
+                                       <li><a href="#" class="black">Nous connaître</a></li>
+                                       <li><a href="#" class="black">Contact</a></li>
+                                       <li><a href="#" class="black">Conditions générales de vente</a></li>
+                                       <li><a href="#" class="black">Vos informations personnelles</a></li>
+                                    </ul>  
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>
-
+    
             </div>
-
+    
         </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

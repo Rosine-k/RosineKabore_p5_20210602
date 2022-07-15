@@ -1,113 +1,224 @@
-const createProduct = (item) =>{
-    return `<div class="col-sm-8 mx-auto">
-                <div class="card">
-                    <img class="card-img-top" src="${item.imageUrl}" width="250" height="250" alt="camera">
-                    <div class="card-body bgc-primary">
-                        <h3 class="card-title black">${item.name}</h3>
-                        <h4 class="card-price black"> ${formatPrice(item.price)} €</h4>
-                        <label for="choice">Choisissez une option</label>
-                        <select name="option_lense" id="option_lense" class="lenses">
+// création du produit
+const createProduct = (item) => {
+    if(item==null || item=="") {
+        messageForUser('Attention les données à afficher sont incorrectes','produit.js -> createProduct');
+        return false;
+    }
 
-                        </select>
-                        <label for="quantity">Quantité</label>
-                        <select id="quantity-product" name="quantity-product">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10+</option>
-                        </select>
+    let divUn       = document.createElement('div');
+    divUn.className = "col-sm-6 mx-auto";
 
-                        <button id="addToCart" class="btn btn-panier border-dark addPanier" type="button">Ajouter au panier</button>
-                    </div>
-                </div>       
-            </div>` ;
-  
+    let divDeux       = document.createElement('div');
+    divDeux.className = "card";
+
+    let divTrois       = document.createElement('div');
+    divTrois.className = "card-body";
+
+    let img          = document.createElement('img');
+    img.style.width  = "100";
+    img.style.height = "100";
+    img.className    = "img-appareil";
+    img.setAttribute("src", item.imageUrl);
+    img.setAttribute("alt", "camera");
+
+    let h3       = document.createElement('h3');
+    h3.className = "card-title title black";
+    h3.textContent     = item.name;
+
+    let h4       = document.createElement('h4');
+    h4.className = "price black";
+    h4.textContent  = formatPrice(item.price) + " €";
+
+    let description = document.createElement('p');
+    description.className   = "description black";
+    description.textContent = item.description;
+
+    let labelOption         = document.createElement('label');
+    labelOption.textContent = "Choisissez une option";
+    labelOption.setAttribute("for", "choice");
+
+    let selectOption       = document.createElement('select');
+    selectOption.className = "px-auto lenses";
+    selectOption.setAttribute("name", "option_lense");
+    selectOption.setAttribute("id", "option_lense");
+    
+    let labelQuantite         = document.createElement('label');
+    labelQuantite.textContent = "Quantité";
+    labelQuantite.setAttribute("for", "quantity");
+
+    let selectQuantite = document.createElement('select');
+    selectQuantite.className = "px-auto quantity";
+    selectQuantite.setAttribute("name", "quantity-product");
+    selectQuantite.setAttribute("id", "quantity-product");
+
+    let btn         = document.createElement('button');
+    btn.textContent = "Ajouter au panier";
+    btn.className   = "px-auto btn btn-panier btn-dark addPanier text"; 
+    btn.setAttribute("id", "addToCart");
+
+    let quantity  ='';
+
+    for (let i = 1; i < 11; i++) {  
+      quantity+="<option>"+ i + "</option>";
+    }
+    selectQuantite.innerHTML =quantity;
+    
+    divUn.appendChild(divDeux);
+    divDeux.appendChild(divTrois);
+    divTrois.appendChild(h3);
+    divTrois.appendChild(img);
+    divTrois.appendChild(h4);
+    divTrois.appendChild(description);
+    divTrois.appendChild(labelOption);
+    divTrois.appendChild(selectOption);
+    divTrois.appendChild(labelQuantite);
+    divTrois.appendChild(selectQuantite);
+    divTrois.appendChild(btn);
+    
+    return divUn;  
 }
 
 
-function showProduct(camera)
-{
-    document.querySelector(".card-produit").innerHTML += camera;
+// affichage du produit
+function showProduct(camera) {
+    if(camera==null || camera=="") {
+        messageForUser('Attention les données ne peuvent pas être affichés','produit.js -> showProduct');
+        return false;
+    }
+
+    document.querySelector(".card-produit").appendChild(camera);
 }
 
 
-function AddEventAddToCart(item)
-{
+//ajout du produit au clic
+function AddEventAddToCart(item) {
+    if(item==null || item=="") {
+        messageForUser("Le ou les produits n'ont pas été ajoutés",'produit.js -> AddEventAddToCart');
+        return false;
+    }
+
     document.getElementById("addToCart").addEventListener("click",function() { addItemToCart(item);},false);
 }
 
 
-function addOption(item)
-{
+//affichage des options
+function addOption(item) {
+    if(item==null || item=="") {
+        messageForUser('Attention les options ne peuvent être affiché','produit.js -> addOption');
+        return false;
+    }
+
     for(let lense of item.lenses) {
         document.querySelector(".lenses").innerHTML += `<option>${lense}</option>`;
-       }
+    }
 }
 
 
 //récupérer l'ID du produit
-let params = new URLSearchParams(window.location.search);
-
-let idProduct = params.get('id');
-
-let urlProduct = URL_API + '/' + idProduct;
-
-fetch(urlProduct)
-.then(response => response.json())
-.then(item => {
-
-    let camera = createProduct(item);
-    showProduct(camera);
-    addOption(item)
-    AddEventAddToCart(item);
+function getId() {
     
-});
+    let params = new URLSearchParams(window.location.search);
 
-function razLS()
-{
+    if(params==null || params=="") {
+        messageForUser("L'id n'a pas été récupéré",'produit.js -> getId');
+        return false;
+    }
+
+    return params.get('id');
+}
+
+
+// récupération des données
+function getData(urlProduct) {
+
+    if(urlProduct==null || urlProduct=="") {
+        messageForUser('Un problème est survenu au niveau du backend','produit.js -> getData');
+        return false;
+    }
+        
+    fetch(urlProduct)
+    .then(response => response.json())
+    .then(item => {
+
+        let camera = createProduct(item);
+        showProduct(camera);
+        addOption(item)
+        AddEventAddToCart(item);   
+    }); 
+}
+ 
+
+// affichage des données
+function main() {
+    let id = getId();
+    
+    if (id==false) {
+        return;
+    }
+
+    let urlProduct = URL_API + '/' + id;
+
+    getData(urlProduct);
+}
+main();
+
+
+function razLS() {
 
     localStorage.setItem('produit', JSON.stringify([]));
     console.log('RAZ localstorage');
 }
 
-function addItemToCart(item)
-{
-   //récupération de l'option
-   let selectLenses = document.querySelector("#option_lense");
 
+function makeProductoAdd(item) {
+
+   //si probleme rencontré
+   if(item==null || item=="") {
+       messageForUser("Les options n'ont pas été récupérés",'produit.js -> makeProductoAdd');
+       return false;
+    }
+    //récupération de l'endroit d'affichage de l'option
+    let selectLenses = document.querySelector("#option_lense");
+
+   // valeur de l'option
    let choixLenses = selectLenses.value; 
 
    //récupération de la quantité
-   let quantiteProduit = parseInt( document.querySelector("#quantity-product").value); 
+   let quantiteProduit = parseInt(document.querySelector("#quantity-product").value);
+   
+   let id = item._id;
+
+   return {
+        'id': id, 
+        'quantity': quantiteProduit,
+        'lenses': choixLenses,
+    };
+}
+
+
+function addItemToCart(item) {
+     
+    if(item == null || item == "") {
+        messageForUser('Attention les données à afficher sont incorrectes','produit.js -> addItemToCart');
+        return false;
+    }
+
+    let productToAdd = makeProductoAdd(item);
 
     //traitement du local storage
 
     let items = JSON.parse(localStorage.getItem('produit')) ;
    
-    let present=false;
-    let name=item.name;
-    let price=item.price;
-    let id=item._id;
-
-    let productToAdd={
-        'id':id,
-        'name':name,
-        'quantity':quantiteProduit,
-        'lenses':choixLenses,
-        'price':price
-    };
- 
-    // Si le local storage contient le produit avec l'option ->modification de la quantité
-    if ( items.length==0) {
-        
-        
+    let present = false;
+   
+    if (items=== null ) {
+        items = [];
+    }
+    // Si le local storage contient le produit avec l'option -> modification de la quantité
+    if (items.length==0) {
+        console.log('ajout panier');   
         items.push(productToAdd);
+
     }
 
     // si le local storage ne le contient pas, ajout du produit avec option et quantité
@@ -117,7 +228,7 @@ function addItemToCart(item)
             
             if (itemInLS.name===name && itemInLS.lenses===choixLenses) {
                 console.log('trouvé !');
-                itemInLS.quantity +=   quantiteProduit;
+                itemInLS.quantity += quantiteProduit;
                 present= true;   
             }
             console.log(itemInLS);
@@ -137,11 +248,9 @@ function addItemToCart(item)
       
 }
 
+// fenetre de confirmation 
 function fenetreConfirmation() {
-    if(window.confirm(`Votre article a bien été ajouté au panier ! Appuyez sur OK pour consulter le panier ou sur ANNULER pour revenir à la page d'accueil`)) {
-            window.location.href ="panier.html";
-        }
-        else{
-            window.location.href ="index.html";
-        }
+
+    alert('Votre article a bien été ajouté au panier !');
+
 }
