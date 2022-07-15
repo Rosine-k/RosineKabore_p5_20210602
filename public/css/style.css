@@ -51,10 +51,6 @@ body {
   background: linear-gradient(to top, #abc8f8, #dabfe5, #f2c5dd);
 }
 
-figure {
-  padding-bottom: 2em;
-}
-
 .title {
   padding-top: 1em;
 }
