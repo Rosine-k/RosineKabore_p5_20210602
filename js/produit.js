@@ -15,21 +15,19 @@ const createProduct = (item) => {
     divTrois.className = "card-body";
 
     let img          = document.createElement('img');
-    img.style.width  = "100";
-    img.style.height = "100";
     img.className    = "img-appareil";
     img.setAttribute("src", item.imageUrl);
     img.setAttribute("alt", "camera");
 
-    let h3       = document.createElement('h3');
-    h3.className = "card-title title black";
-    h3.textContent     = item.name;
+    let h3         = document.createElement('h3');
+    h3.className   = "card-title title black";
+    h3.textContent = item.name;
 
-    let h4       = document.createElement('h4');
-    h4.className = "price black";
-    h4.textContent  = formatPrice(item.price) + " €";
+    let h4         = document.createElement('h4');
+    h4.className   = "price black";
+    h4.textContent = formatPrice(item.price) + " €";
 
-    let description = document.createElement('p');
+    let description         = document.createElement('p');
     description.className   = "description black";
     description.textContent = item.description;
 
@@ -46,7 +44,7 @@ const createProduct = (item) => {
     labelQuantite.textContent = "Quantité";
     labelQuantite.setAttribute("for", "quantity");
 
-    let selectQuantite = document.createElement('select');
+    let selectQuantite       = document.createElement('select');
     selectQuantite.className = "px-auto quantity";
     selectQuantite.setAttribute("name", "quantity-product");
     selectQuantite.setAttribute("id", "quantity-product");
@@ -61,7 +59,7 @@ const createProduct = (item) => {
     for (let i = 1; i < 11; i++) {  
       quantity+="<option>"+ i + "</option>";
     }
-    selectQuantite.innerHTML =quantity;
+    selectQuantite.innerHTML = quantity;
     
     divUn.appendChild(divDeux);
     divDeux.appendChild(divTrois);
@@ -81,7 +79,7 @@ const createProduct = (item) => {
 
 // affichage du produit
 function showProduct(camera) {
-    if(camera==null || camera=="") {
+    if(camera == null || camera == "") {
         messageForUser('Attention les données ne peuvent pas être affichés','produit.js -> showProduct');
         return false;
     }
@@ -92,7 +90,7 @@ function showProduct(camera) {
 
 //ajout du produit au clic
 function AddEventAddToCart(item) {
-    if(item==null || item=="") {
+    if(item == null || item == "") {
         messageForUser("Le ou les produits n'ont pas été ajoutés",'produit.js -> AddEventAddToCart');
         return false;
     }
@@ -103,7 +101,7 @@ function AddEventAddToCart(item) {
 
 //affichage des options
 function addOption(item) {
-    if(item==null || item=="") {
+    if(item == null || item == "") {
         messageForUser('Attention les options ne peuvent être affiché','produit.js -> addOption');
         return false;
     }
@@ -119,7 +117,7 @@ function getId() {
     
     let params = new URLSearchParams(window.location.search);
 
-    if(params==null || params=="") {
+    if(params == null || params == "") {
         messageForUser("L'id n'a pas été récupéré",'produit.js -> getId');
         return false;
     }
@@ -131,7 +129,7 @@ function getId() {
 // récupération des données
 function getData(urlProduct) {
 
-    if(urlProduct==null || urlProduct=="") {
+    if(urlProduct == null || urlProduct == "") {
         messageForUser('Un problème est survenu au niveau du backend','produit.js -> getData');
         return false;
     }
@@ -152,7 +150,7 @@ function getData(urlProduct) {
 function main() {
     let id = getId();
     
-    if (id==false) {
+    if (id == false) {
         return;
     }
 
@@ -162,7 +160,8 @@ function main() {
 }
 main();
 
-
+ 
+// vider local storage
 function razLS() {
 
     localStorage.setItem('produit', JSON.stringify([]));
@@ -173,7 +172,7 @@ function razLS() {
 function makeProductoAdd(item) {
 
    //si probleme rencontré
-   if(item==null || item=="") {
+   if(item == null || item == "") {
        messageForUser("Les options n'ont pas été récupérés",'produit.js -> makeProductoAdd');
        return false;
     }
@@ -211,27 +210,26 @@ function addItemToCart(item) {
    
     let present = false;
    
-    if (items=== null ) {
+    if (items === null ) {
         items = [];
     }
-    // Si le local storage contient le produit avec l'option -> modification de la quantité
-    if (items.length==0) {
+    
+    // si le local storage est vide, ajout du produit avec option et quantité
+    if (items.length == 0) {
         console.log('ajout panier');   
         items.push(productToAdd);
 
     }
 
-    // si le local storage ne le contient pas, ajout du produit avec option et quantité
+    // Si le local storage contient le produit avec l'option -> modification de la quantité
     else {
-
         for (let itemInLS of items) {
             
-            if (itemInLS.name===name && itemInLS.lenses===choixLenses) {
+            if (itemInLS.id === productToAdd.id && itemInLS.lenses === productToAdd.lenses) {
                 console.log('trouvé !');
-                itemInLS.quantity += quantiteProduit;
-                present= true;   
+                itemInLS.quantity += productToAdd.quantity;
+                present= true; 
             }
-            console.log(itemInLS);
         };
         if (!present) {
             console.log('non présent');
@@ -248,7 +246,7 @@ function addItemToCart(item) {
       
 }
 
-// fenetre de confirmation 
+// fenetre de confirmation de l'ajout au panier
 function fenetreConfirmation() {
 
     alert('Votre article a bien été ajouté au panier !');

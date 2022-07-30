@@ -13,5 +13,4 @@ document.getElementByClass('order-id').textContent = idCommande;
 document.getElementByClass('text-pseudo').textContent = "Merci pour votre commande" + pseudo + "!";
 
 
-//Vider le panier
-sessionStorage.clear();
+

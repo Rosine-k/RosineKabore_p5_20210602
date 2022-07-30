@@ -3,10 +3,14 @@ let productsBE;
 
 // création du panier
 function showOneElementOfBasket(productBE,productLS) {
+  
+  const conteneur = document.querySelector(".card-panier");
+
+  let form = document.querySelector('.formulaire');
 
   // si panier vide
-  if (productsLS === null || productsLS.length ===0) {
-    document.querySelector(".card-panier").innerHTML += '<h2>Panier vide</h2>';
+  if (productsLS === null || productsLS.length === 0) {
+    conteneur.innerHTML += '<h2>Panier vide</h2>';
     console.log('vide');
     //formulaire caché
     form.classList.add("display-none");  
@@ -14,67 +18,85 @@ function showOneElementOfBasket(productBE,productLS) {
 
   else {
     //affichage du formulaire
-    let form = document.querySelector('.formulaire');
     form.classList.remove("display-none"); 
     
-    let divUn       = document.createElement('div');
-    divUn.className = "card-body";
+    let table       = document.createElement('table');
+    table.className = "table";
+    table.setAttribute("data-id", productLS.id);
+    table.setAttribute("data-option", productLS.lenses);
 
-    let divDeux = document.createElement('div');
-    divDeux.className = "img-panier";
+    let tbody = document.createElement('tbody');
 
-    let img = document.createElement('img');
-    img.style.width = "100";
-    img.style.height = "100";
-    img.className = "img-panier";
+    let tr = document.createElement('tr');
+
+    let tdImg = document.createElement('td');
+
+    let img          = document.createElement('img');
+    img.className    = "img img-panier";
+    img.style.width  = "100%";
+    img.style.height = "10vw";
+    img.className    = "img-panier";
     img.setAttribute("src", productBE.imageUrl);
     img.setAttribute("alt", "image panier");
 
-    let divTrois = document.createElement('div');
-    divTrois.className = "info-panier flex-column-around";
+    let tdName       = document.createElement('td');
+    tdName.className = "black";
+    tdName.innerText = productBE.name;
 
-    let h3 = document.createElement('h3');
-    h3.className = "black card-title";
-    h3.value = productBE.name;
+    let tdOption       = document.createElement('td');
+    tdOption.className = "option-panier";
+    tdOption.innerText = productLS.lenses;
 
-    let option = document.createElement('p');
-    option.className = "option-panier";
-    option.value = productLS.lenses;
+    let tdPlus = document.createElement('td');
 
-    let prix = document.createElement('p');
-    prix.className = "prix";
-    prix.value = formatPrice(productBE.price * productLS.quantity) + " €";
+    let btnPlus       = document.createElement('button');
+    btnPlus.className = "btn-plus btn-dark";
+    btnPlus.innerText = "+";
+    btnPlus.setAttribute("data-id", productLS.id);
+    btnPlus.setAttribute("data-option", productLS.lenses);
 
-    let divQuatre = document.createElement('div');
-    divQuatre.className = "quantite-change flex-around";
+    let tdQuantity       = document.createElement('td');
+    tdQuantity.className = "quantity-panier";
+    tdQuantity.innerText = productLS.quantity;
 
-    let divCinq = document.createElement('div');
-    divCinq.className = "flex-centre";
+    let tdMoins = document.createElement('td');
 
-    let btnMoins = document.createElement('button');
-    btnMoins.className = "btn-moins";
+    let btnMoins       = document.createElement('button');
+    btnMoins.className = "btn-moins btn-dark";
+    btnMoins.innerText = "-";
+    btnMoins.setAttribute("data-id", productLS.id);
+    btnMoins.setAttribute("data-option", productLS.lenses);
 
-    let span = document.createElement('span');
-    span.className = "quantite-panier";
-    span.value = productLS.quantity;
+    let tdPrixFinal       = document.createElement('td');
+    tdPrixFinal.className = "price prix-final";
+    tdPrixFinal.innerText = formatPrice(productBE.price * productLS.quantity) + " €";
 
-    let btnPlus = document.createElement('button');
-    btnPlus.className = "btn-plus";
+    let tdRemove = document.createElement('td');
 
-    let btnRemove = document.createElement('button');
-    btnRemove.className = "btn-remove btn mv-2 mx-3";
+    let btnRemove       = document.createElement('button');
+    btnRemove.className = "btn-remove btn btn-dark mv-2 mx-3";
     btnRemove.setAttribute("type", "button");
 
-    let trash = document.createElement('i');
+    let trash       = document.createElement('i');
     trash.className = "fas fa-trash-alt";
 
-    divCinq.appendChild(btnMoins, span, btnPlus);
-    divQuatre.appendChild(divCinq);
-    divTrois.appendChild(h3, option, prix);
-    divDeux.appendChild(img);
-    divUn.appendChild(divDeux, divTrois, divQuatre, divCinq, trash);
+    table.appendChild(tbody);
+    tbody.appendChild(tr);
+    tr.appendChild(tdImg);
+    tdImg.appendChild(img);
+    tr.appendChild(tdName);
+    tr.appendChild(tdOption);
+    tdMoins.appendChild(btnMoins);
+    tr.appendChild(tdMoins);
+    tr.appendChild(tdQuantity);
+    tr.appendChild(tdPlus);
+    tdPlus.appendChild(btnPlus);    
+    tr.appendChild(tdPrixFinal);
+    tr.appendChild(tdRemove);
+    tdRemove.appendChild(btnRemove);
+    btnRemove.appendChild(trash);
 
-    return divUn;
+    conteneur.appendChild(table);
   }
  
 }
@@ -82,8 +104,8 @@ function showOneElementOfBasket(productBE,productLS) {
 //récupération des produits à partir de l'API
 function getData(url) {
 
-  if(url==null || url=="") {
-    messageForUser('Un problème est survenu au niveau du backend','index.js -> getData');
+  if(url === null || url === "") {
+    messageForUser('Un problème est survenu au niveau du backend','panier.js -> getData');
     return false;
   }
 
@@ -92,6 +114,7 @@ function getData(url) {
   .then(response => {
     productsBE = response;
     showDatas();
+    
   }); 
 }
 
@@ -99,34 +122,121 @@ function getData(url) {
 function showDatas() {
 
   for(i = 0; i < productsLS.length; i++) {
-    let productBE = getProdutFromBE( productsLS[i]['id']);
+    let productBE = getProductFromBE(productsLS[i]['id']);
     let productLS = productsLS[i];
-    console.log('manu');
-    console.log( productsLS[i]['id']);
 
-
-    showOneElementOfBasket(productBE,productLS );
-
+    showOneElementOfBasket(productBE,productLS);
   }
-    // todo showPriceTotal(productsLS,productsBE)
+ showPriceTotal(productsLS,productsBE)
 }
 
-// function getProdutFromBE(id)
-// {
-//   for(i = 0; i < productsBE.length; i++) {
-//     if(productsBE[i]['_id']==id ) {
-//       return productsBE[i];
-//     }
-//   }
-// }
+
+function getProductFromBE(id) {
+  
+ return productsBE.find(product => product._id === id)
+}
+
 
 function main() {
 
   let url = URL_API;   
   
-  if (url==false) {
+  if (url == false) {
     return;
   }
   getData(url);
 }
 main();
+
+
+// calcul du prix total
+function showPriceTotal(productsLS,productBE) {
+  // si rien dans local storage
+  
+  //si produit dans local storage
+  let totalPrice = document.querySelector('.prix-total');
+  let total = 0;
+
+  for (i = 0; i < productsLS.length; i++) {
+
+    productBE = getProductFromBE(productsLS[i].id);
+
+    total = total + (productBE.price * productsLS[i].quantity);
+    totalPrice.textContent = formatPrice(total) + " €";
+        
+    localStorage.setItem("totalCommande", JSON.stringify(total));
+  }
+}
+
+
+// supprimer produit
+function removeProduct () {
+  let btnRemoveProduct = document.querySelectorAll('.btn-remove');
+  
+  for (let i = 0; i < btnRemoveProduct.length; i++) {
+    btnRemoveProduct[i].addEventListener('click', (e) => {
+     
+      e.preventDefault();
+
+      let idProduct = productsLS[i].id;
+      let optionLense = productsLS[i].lenses;
+
+      productsLS = productsLS.filter(el => el.id !== idProduct || el.lenses !== optionLense);
+            
+      localStorage.setItem("produit", JSON.stringify(productsLS));
+  
+      window.location.reload();
+    })
+  }
+}
+removeProduct();
+
+
+// ajouter quantite produit
+function addQuantity() {
+  let btnAdd = document.querySelectorAll('.btn-plus');
+  
+  for(let i = 0; i < btnAdd.length; i++) {
+
+    btnAdd.addEventListener('click', function() {
+    
+      let cameraId = e.target.getAttribute("data-id");
+      
+      let cameraOption = e.target.getAttribute("data-option");
+
+      if (productsLS[i].id == cameraId && productsLS[i].lenses == cameraOption) {
+        return (
+          productsLS[i].quantity++,
+          localStorage.setItem("produit", JSON.stringify(productsLS)),
+          document.querySelector('.quantity-panier')[i].textContent = productsLS[i].quantity,
+          document.querySelector('.prix-final')[i].textContent = productsLS[i].quantity * productsLS.formatPrice(price)
+        );
+        
+      }
+    })      
+  } 
+}
+addQuantity();
+
+
+//baisser quantite produit
+// function removeQuantity() {
+//   let btnRemove = document.querySelector('.btn-moins');
+
+//   btnRemove.addEventListener('click', function(){
+
+//     let totalProduct = productsLS.length;
+
+//     for(i = 0; i < totalProduct.length; i++) {
+     
+//       if (productsLS[i].quantity == 1 && totalProduct == 1) {
+//         return (
+//           localStorage.removeItem("produit"), 
+//           window.location.reload()
+//         );
+//       }
+
+//     }
+//   })
+
+// }

@@ -69,36 +69,15 @@
         <div class="bloc d-block w-100" id="panier-commande">
             <div class="container bloc-lg ">
                 <div class="row justify-content-md-center">
-                    <div class="col-sm-6">
-                        <div class="card card-panier" id="panierJs">
-                            <div class="card-body">
-                                <div class="img-panier">
-                                    <img src="" width="100" height="100" alt="image panier">
-                                </div>
-                                <div class="info-panier flex-column-around">
-                                    <h3 class="black card-title">Nom</h3>
-                                    <p class="option-panier">Option</p>
-                                    <p class="prix">0 €</p>
-                                </div>
-                                <div class="quantite-change flex-around">
-                                    <div class="flex-centre">
-                                        <button class="btn-moins">-</button>
-                                        <span class="quantity-panier">1</span>
-                                        <button class="btn-plus">+</button>
-                                    </div>
-                                   
-                                    <button class="btn btn-remove my-2 mx-3" type="button"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-
-                            </div>
-                        </div>
+                    <div class="col-sm-7 card-panier">                                              
                         
                     </div>
                     <div class="col-sm-3">
-                        <div class="card">
-                            <div class="card-body">
+                        <div class="card border-dark">
+                            <div class="card-body text-center">
                                 <h3>PRIX TOTAL:</h3>
-                                <div class="card-text black bolder prix-total"></div>
+                                <div class="card-text black bolder"></div>
+                                <h4 class="prix-total price basket"></h4>
                             </div>
                         </div>
                        
@@ -119,36 +98,40 @@
                                 <label for="lastName">Nom</label>
                                 <input type="text" name="lastName" class="form-control" placeholder="Votre nom"
                                     id="lastName" minlength="2" required>
+                                <p id="lastNameError error"></p>    
                             </div>
 
                             <div class=”form-group”>
                                 <label for="firstName">Prénom</label>
                                 <input type="text" name="firstName" class="form-control" placeholder="Votre Prénom"
                                     id="firstName" minlength="2" required>
+                                <p id="firstNameError error"></p>     
                             </div>
 
                             <div class=”form-group”>
                                 <label for="address">Adresse</label>
                                 <input type="text" name="address" class="form-control" placeholder="Votre adresse"
                                     id="address" minlength="8" required>
+                                <p id="addressError error"></p>     
                             </div>
 
                             <div class=”form-group”>
                                 <label for="codePostal">Code Postal</label>
                                 <input type="number" name="zip" class="form-control" placeholder="Votre code postal"
                                     id="zip" minlength="5" required>
+                                <p id="zipError error"></p> 
                             </div>
 
                             <div class=”form-group”>
                                 <label for="city">Ville</label>
-                                <input type="text" name="city" class="form-control" placeholder="Votre ville" id="city"
-                                    required>
+                                <input type="text" name="city" class="form-control" placeholder="Votre ville" id="city" required>
+                                <p id="cityError error"></p> 
                             </div>
 
                             <div class=”form-group”>
                                 <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Votre e-mail"
-                                    id="email" required>
+                                <input type="email" name="email" class="form-control" placeholder="Votre e-mail" id="email" required>
+                                <p id="emailError error"></p> 
                             </div>
 
                             <button class=" btn btn-dark btn-validation border-dark bloc-button" type="submit">
@@ -162,8 +145,6 @@
                 </div>
             </div>
         </div>
-
-
 
     </main>
 
@@ -217,6 +198,7 @@
     <script src="js/variable.js"></script>
     <script src="js/functions.js"></script>
     <script src="js/panier.js"></script>
+    <script src="js/validationPanier.js"></script>
 
 </body>
 

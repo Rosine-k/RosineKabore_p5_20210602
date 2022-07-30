@@ -1,6 +1,6 @@
 /*body*/
-.bgc-primary {
-  background-color: #d46a29;
+.bgc {
+  background-color: white;
 }
 
 .black {
@@ -31,10 +31,13 @@ body {
   font-weight: 500;
 }
 
+img {
+  object-fit: contain;
+}
+
 .img-appareil {
   width: 100%;
   height: 17vw;
-
 }
 
 .heading_title1 {
@@ -85,13 +88,11 @@ table {
   border-collapse: collapse;
   width: 400px;
   padding: 10px;
-  border: black solid 1px;
   text-align: center;
+  margin-bottom: 1em;
 }
 
-td,
-th {
-  border: 1px solid black;
+td {
   padding: 10px;
   vertical-align: middle;
 }
@@ -113,8 +114,8 @@ a:link {
   text-decoration: none;
 }
 
-img {
-  object-fit: contain;
+#error {
+  color: red;
 }
 
 

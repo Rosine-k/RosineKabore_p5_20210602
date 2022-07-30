@@ -1,7 +1,7 @@
 // création du produit
 const showCamera = (data) =>{
 
-    if(data==null || data=="") {
+    if(data == null || data == "") {
         messageForUser('Attention les données à afficher sont incorrectes','index.js -> showCamera');
         return false;
     }
@@ -21,8 +21,6 @@ const showCamera = (data) =>{
 
     let img          = document.createElement('img');
     img.className    = "img-appareil";
-    img.style.width  = "150";
-    img.style.height = "150";
     img.setAttribute("src", data.imageUrl);
         
     let h3         = document.createElement('h3');
