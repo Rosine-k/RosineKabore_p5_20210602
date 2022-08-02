@@ -1,6 +1,7 @@
-// création du produit
+// création du code html produit
 const showCamera = (data) =>{
 
+    // si problème rencontré
     if(data == null || data == "") {
         messageForUser('Attention les données à afficher sont incorrectes','index.js -> showCamera');
         return false;
@@ -48,13 +49,13 @@ const showCamera = (data) =>{
     lien.appendChild(h4);
     lien.appendChild(btn);
    
-    return divUn;
-    
+    return divUn;    
 }
 
 // affichage des données
 function showDatas(datas) {
 
+    // si problème rencontré
     if(datas==null || datas=="") {
         messageForUser('Attention les données à afficher sont incorrectes','index.js -> showDatas');
         return false;
@@ -71,7 +72,8 @@ function showDatas(datas) {
 
 //récupération des produits à partir de l'API
 function getData(url) {
-
+    
+    // si problème rencontré
     if(url==null || url=="") {
         messageForUser('Un problème est survenu au niveau du backend','index.js -> getData');
         return false;
@@ -93,5 +95,3 @@ function main() {
     }
 }
 main();
-
-//showCamera('');

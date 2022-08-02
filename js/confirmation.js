@@ -1,16 +1,13 @@
-//récupérer l'identifiant de la commande et le pseudo utilisateur
-function getInfos() {
-    
-}
-const params = new URLSearchParams(window.location.search);
-    let idCommande = params.get('idCommande');
-    let pseudo = params.get('pseudo');
+//Récupération du numéro de commande dans l'URL
+var str = window.location.href;
+var url = new URL(str);
+var orderIdURL = url.searchParams.get("orderId");
 
-let prixTotal = priceFormat(sessionStorage.getItem('prixTotal'))
-document.getElementByClass('total-price').textContent = prixTotal;
+//Affichage du numéro de commande
+var orderNumber = document.querySelector('.order-id');
+orderNumber.innerHTML = "Commande enregistrée : " + orderIdURL;
 
-document.getElementByClass('order-id').textContent = idCommande;
-document.getElementByClass('text-pseudo').textContent = "Merci pour votre commande" + pseudo + "!";
+
 
 
 

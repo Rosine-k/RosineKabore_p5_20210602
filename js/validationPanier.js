@@ -1,176 +1,180 @@
-// validation du formulaire 
-let inputFirstName = document.getElementById('firstName');
-let inputLastName = document.getElementById('lastName');
-let inputAddress = document.getElementById('address');
-let inputCity = document.getElementById('city');
-let inputZip = document.getElementById('zip');
-let inputEmail = document.getElementById('email');
+// Ajout des Regex
+let form = document.querySelector(".formulaire");
+
+//Création des expressions régulières
+let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
+let nameRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
+let addressRegExp = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
+let numberRegExp = new RegExp("^[0-9]{5,5}$");
 
 function validFirstName() {
+    let isvalid = true;
+    let inputFirstName = document.getElementById('firstName');
 
-    let errorFirstName = document.getElementById('firstNameError');
+    let firstNameErrorMsg = document.getElementById('firstNameError');
+ 
+    if (inputFirstName.value === "") {
+        firstNameErrorMsg.innerHTML = 'Champ invalide, veuillez saisir votre prénom.';
+        isvalid = false;
+    }
+    else if (nameRegExp.test(inputFirstName.value)) {
+        firstNameErrorMsg.innerHTML = '';
+    } else {
+        firstNameErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre prénom.';
+        isvalid = false;
+    }
+    return isvalid;
 
-    inputFirstName.addEventListener('keyup', () => {
-
-        if (inputFirstName == /^[A-Za-z\s]+$/ || inputFirstName == "") {
-            return true;
-       }
-
-       else {
-        inputFirstName.style.borderColor = "red";
-        errorFirstName.innerHTML = "Veuillez entrer votre prénom";
-       }
-    })    
 }
 
 function validLastName() {
+    let isvalid = true;
+    let inputLastName = document.getElementById('lastName');
 
-    let errorLastName = document.getElementById('lastNameError');
+    let lastNameErrorMsg = document.getElementById('lastNameError');
 
-    inputLastName.addEventListener('keyup', () => {
-
-        if (inputLastName == /^[A-Za-z\s]+$/ || inputLastName == "") {
-            return true;
-        }
-
-       else {
-        inputLastName.style.borderColor = "red";
-        errorLastName.innerHTML = "Veuillez entrer votre nom de famille";
-       }
-    })    
+    if (inputLastName.value === "") {
+        lastNameErrorMsg.innerHTML = 'Champ invalide, veuillez saisir votre nom.';
+        isvalid = false;
+    }
+    else if (nameRegExp.test(inputLastName.value)) {
+        lastNameErrorMsg.innerHTML = '';
+    } else {
+        lastNameErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre nom.';
+        isvalid = false;
+    }
+    return isvalid;
 }
-
 
 function validAddress() {
-    
-    let errorAdress = document.getElementById('addressError');
+    let isvalid = true;
+    let inputAddress = document.getElementById('address');
 
-    inputAddress.addEventListener('keyup', () => {
+    let addressErrorMsg = document.getElementById('addressError');
 
-        if (inputAddress == /^[0-9a-zA-Z]+$/ || inputAddress == "") {
-            return true;
-        }
-        else {
-            inputAddress.style.borderColor = "red";
-            errorAdress.innerHTML = "Veuillez entrer votre adresse";
-           }
-    })   
-    
+    if (inputAddress.value === "") {
+        addressErrorMsg.innerHTML = 'Champ invalide, veuillez saisir votre adresse.';
+        isvalid = false;
+    }
+    else if (addressRegExp.test(address.value)) {
+        addressErrorMsg.innerHTML = '';
+    } else {
+        addressErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre adresse.';
+        isvalid = false;
+    }
+    return isvalid;
 }
 
+
 function validCity() {
+    let isvalid = true;
+    let inputCity = document.getElementById('city');
 
-    let errorCity = document.getElementById('cityError');
+    let cityErrorMsg = document.getElementById('cityError');
 
-    inputCity.addEventListener('keyup', () => {
-
-        if (inputCity == /^[A-Za-z\s]+$/ || inputCity == "") {
-            return true;
-       }
-
-       else {
-        inputCity.style.borderColor = "red";
-        errorCity.innerHTML = "Veuillez entrer votre ville";
-       }
-    })    
+    if (inputCity.value === "") {
+        cityErrorMsg.innerHTML = 'Champ invalide, veuillez saisir votre ville.';
+        isvalid = false;
+    }
+    else if (nameRegExp.test(city.value)) {
+        cityErrorMsg.innerHTML = '';
+    } else {
+        cityErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre ville.';
+        isvalid = false;
+    }
+    return isvalid;
 }
 
 function validZip() {
+    let isvalid = true;
+    let inputZip = document.getElementById('zip');
 
-    let errorZip = document.getElementById('zipError');
+    let zipErrorMsg = document.getElementById('zipError');
 
-    inputZip.addEventListener('keyup', () => {
-
-        if (inputZip == /^[0-9]+$/ || inputZip == "") {
-            return true;
-       }
-
-       else {
-        inputZip.style.borderColor = "red";
-        errorZip.innerHTML = "Veuillez entrer votre code postal";
-       }
-    }) 
+    if (inputZip.value === "") {
+        zipErrorMsg.innerHTML = 'Champ invalide, veuillez saisir votre code postal.';
+        isvalid = false;
+    }
+    else if (zipRegExp.test(zip.value)) {
+        zipErrorMsg.innerHTML = '';
+    } else {
+        zipErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre code postal.';
+        isvalid = false;
+    }
+    return isvalid;
 }
+
 
 function validEmail() {
+    let isvalid = true;
+    let inputEmail = document.getElementById('email');
 
-    let errorEmail = document.getElementById('emailError');
+    let emailErrorMsg = document.getElementById('emailError');
 
-    inputEmail.addEventListener('keyup', () => {
-
-        if (inputEmail == /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/ || inputEmail == "") {
-            return true;
-        }
-
-       else {
-          inputEmail.style.borderColor = "red";
-          errorEmail.innerHTML = "Veuillez entrer votre adresse e-mail";
-        }
-    }) 
+    if (inputEmail.value === "") {
+        emailErrorMsg.innerHTML = 'Champ invalide, veuillez saisir votre adresse email.';
+        isvalid = false;
+    }
+    else if (emailRegExp.test(email.value)) {
+        emailErrorMsg.innerHTML = '';
+    } else {
+        emailErrorMsg.innerHTML = 'Champ invalide, veuillez vérifier votre adresse email.';
+        isvalid = false;
+    }
+    return isvalid;
 }
 
-function validation() {
 
-    let boutonvalidation = document.querySelector('.btn-validation');
+//Envoi des informations client au localstorage
+function sendForm() {
 
-    let firstName = validFirstName();
-    let lastName = validLastName();
-    let address = validAddress();
-    let city = validCity();
-    let zip = validZip();
-    let email = validEmail();
+    let inputFirstName = document.getElementById('firstName');
+    let inputLastName = document.getElementById('lastName');
+    let inputAddress = document.getElementById('address');
+    let inputCity = document.getElementById('city');
+    let inputZip = document.getElementById('zip');
+    let inputEmail = document.getElementById('email');
     
+    let productsLS = JSON.parse(localStorage.getItem("produit"));
 
-    boutonvalidation.addEventListener('click', function (e) {
+    if (!validLastName() || !validFirstName() || !validAddress() || !validCity() || !validZip() || !validEmail) {
+        alert("Vérifiez vos coordonnées pour passer la commande !");
+    } else {
+        alert('test');
+        console.log('fonctionne');
+        productID = [];
 
-        e.preventDefault();
-
-        if (firstName && lastName && address && city && zip && email  == true) {
-            sendOrder();
+        for (let i = 0; i < productsLS.length; i++) {
+            productID.push(productsLS[i].id);
         }
 
-        else {
-            alert("Veuillez saisir des champs valides");    
-            return false;
-        }
-    })
-}
-
-validation();
-
-
-// // envoie de la commande
-function sendOrder() {
-
-    let products = productsLS.map(product => product.id);
-
-    let order = {
-        contact: {
+        let order = {
+        contact : {
             firstName: inputFirstName.value,
             lastName: inputLastName.value,
             address: inputAddress.value,
             city: inputCity.value,
             zip: inputZip.value,
-            mail: inputEmail.value,
+            email: inputEmail.value,
         },
-        idProduct: products,
-    }
+        products : productID
+        }
 
-    let urlOrder = URL_API + '/' + 'order';
+        let urlOrder = URL_API + '/order';
 
-    fetch(urlOrder, {
+        fetch(urlOrder, {
         method: 'POST',
         body: JSON.stringify(order),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-    })
-    .then((response) => response.json())
-    .then(async function (reponseOrder) {
-        order = await reponseOrder;
-        localStorage.setItem(orderId);
-        document.location.href = "confirmation.html?orderId=" + order.orderId;
-        localStorage.clear();
-    })
+        headers: { 
+            'Accept': 'application/json', 
+            'Content-Type': 'application/json' 
+            },
+        })
+        .then((response) => response.json())
+        .then(async function (resultOrder) {
+            order = await resultOrder;
+            document.location.href = "confirmation.html?orderId=" + order.orderId;
+            localStorage.clear();
+        })
+    }
 }

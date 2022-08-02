@@ -69,20 +69,24 @@
         <div class="bloc d-block w-100" id="panier-commande">
             <div class="container bloc-lg ">
                 <div class="row justify-content-md-center">
-                    <div class="col-sm-7 card-panier">                                              
-                        
+
+                    <!----insertion des produits du panier---->
+                    <div class="col-sm-7 card-panier">  
+                                                                    
                     </div>
+                    <!---------------------------------------->  
+
+                    <!----------insertion du prix total------->
                     <div class="col-sm-3">
-                        <div class="card border-dark">
+                        <div class="card border-dark showPrice">
                             <div class="card-body text-center">
                                 <h3>PRIX TOTAL:</h3>
-                                <div class="card-text black bolder"></div>
-                                <h4 class="prix-total price basket"></h4>
+                                <h4 class="prix-total card-text price basket"></h4>
                             </div>
-                        </div>
-                       
-                        
+                        </div>   
                     </div>
+                    <!----------------------------------------->
+
                 </div>
 
                 <div class="row justify-content-md-center">
@@ -91,55 +95,56 @@
 
                         <h2>Vos coordonnées</h2>
 
-
+                        <!----------------------formulaire------------------------------------>
                         <form id="form" class="needs-validation">
 
                             <div class=”form-group”>
                                 <label for="lastName">Nom</label>
                                 <input type="text" name="lastName" class="form-control" placeholder="Votre nom"
                                     id="lastName" minlength="2" required>
-                                <p id="lastNameError error"></p>    
+                                <p id="lastNameError" clas="error"></p>    
                             </div>
 
                             <div class=”form-group”>
                                 <label for="firstName">Prénom</label>
                                 <input type="text" name="firstName" class="form-control" placeholder="Votre Prénom"
                                     id="firstName" minlength="2" required>
-                                <p id="firstNameError error"></p>     
+                                <p id="firstNameError" class="error"></p>     
                             </div>
 
                             <div class=”form-group”>
                                 <label for="address">Adresse</label>
                                 <input type="text" name="address" class="form-control" placeholder="Votre adresse"
                                     id="address" minlength="8" required>
-                                <p id="addressError error"></p>     
+                                <p id="addressError " class="error"></p>     
                             </div>
 
                             <div class=”form-group”>
                                 <label for="codePostal">Code Postal</label>
                                 <input type="number" name="zip" class="form-control" placeholder="Votre code postal"
                                     id="zip" minlength="5" required>
-                                <p id="zipError error"></p> 
+                                <p id="zipError" class="error"></p> 
                             </div>
 
                             <div class=”form-group”>
                                 <label for="city">Ville</label>
                                 <input type="text" name="city" class="form-control" placeholder="Votre ville" id="city" required>
-                                <p id="cityError error"></p> 
+                                <p id="cityError" class="error"></p> 
                             </div>
 
                             <div class=”form-group”>
                                 <label for="email">Email</label>
                                 <input type="email" name="email" class="form-control" placeholder="Votre e-mail" id="email" required>
-                                <p id="emailError error"></p> 
+                                <p id="emailError" class="error"></p> 
                             </div>
 
-                            <button class=" btn btn-dark btn-validation border-dark bloc-button" type="submit">
+                            <a onclick="sendForm()" class=" btn btn-dark btn-validation border-dark bloc-button">
                                 Valider votre commande
-                            </button>
+                            </a>
 
                         </form>
-
+                        <!------------------------------------------------------------------------------------->
+                        
                     </div>
 
                 </div>
